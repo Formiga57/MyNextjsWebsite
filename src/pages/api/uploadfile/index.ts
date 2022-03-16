@@ -8,7 +8,7 @@ interface IBody {
   id: string;
 }
 const storage = multer.diskStorage({
-  destination: './public/posts/tmp',
+  destination: './public/posts/tmp/',
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
@@ -38,10 +38,9 @@ apiRoute.post((req, res) => {
       newname = 'banner';
     }
     var file = req['files'][i];
-    console.log(`${i} ${file.originalname}`);
     if (path.extname(file.originalname) === '.md') {
       fs.rename(
-        './public/posts/tmp' + file.originalname,
+        './public/posts/tmp/' + file.originalname,
         dir + `content${path.extname(file.originalname)}`,
         function (err) {
           if (err) throw err;
@@ -49,7 +48,7 @@ apiRoute.post((req, res) => {
       );
     } else {
       fs.rename(
-        './public/posts/uploads/' + file.originalname,
+        './public/posts/tmp/' + file.originalname,
         dir + `${newname}${path.extname(file.originalname)}`,
         function (err) {
           if (err) throw err;
