@@ -21,8 +21,7 @@ const handler = async (
       //   toolsTags: [1, 3, 2, 4, 5],
       // };
       // await Project.create(project);
-      const projectList = await Project.find();
-      console.log(projectList);
+      const projectList: IProject[] = await Project.find();
       res.status(200).json(projectList);
       break;
     default:

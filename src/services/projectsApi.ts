@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 export interface IProject {
+  slug: string;
+  _id: string;
   title: string;
   description: string;
   banner?: string;

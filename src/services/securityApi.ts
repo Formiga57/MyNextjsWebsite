@@ -43,3 +43,18 @@ export const HandleLogin = ({
       .catch((err) => rej(err));
   });
 };
+export const VerifyRefresh = (): Promise<IUser | null> => {
+  return new Promise((res, rej) => {
+    const result = axios
+      .post('http://localhost:3000/api/security/verifyToken', {})
+      .then((result) => {
+        if (result.status === 200) {
+          const data: IUser = result.data;
+          res(data);
+        } else {
+          rej();
+        }
+      })
+      .catch((err) => rej(err));
+  });
+};

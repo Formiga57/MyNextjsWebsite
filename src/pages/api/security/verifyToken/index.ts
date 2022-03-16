@@ -14,30 +14,32 @@ const parseCookie = (str: string): object =>
     }, {});
 // prettier-ignore
 const handler = async ({ method, body,headers }: NextApiRequest,res: NextApiResponse) => {
+    await dbConnect()
     const cookies = parseCookie(headers.cookie)
-    if(!cookies['accessToken']){
-        return res.status(400).json({error:"No token, go to login page!"})
-    }
-    const decoded = decode(cookies['accessToken'])
-    if(decoded['exp'] > new Date().getTime()/1000){
-        return res.status(200).json({success:"Isn't expired, go further"})
-    }
+    // if(!cookies['accessToken']){
+    //     return res.status(401).json({error:"No token, go to login page!"})
+    // }
+    // const decoded = decode(cookies['accessToken'])
+    // const user:IUser = await User.findOne({$or:[{username:decoded['username']},{email:decoded['email']}]})
+    // if(decoded['exp'] > new Date().getTime()/1000){
+    //     return res.status(200).json(user)
+    // }
     if(!cookies['refreshToken']){
-        return res.status(400).json({error:"No refresh, expired!"})
+        return res.status(401).json({error:"No refresh, expired!"})
     }
-    const refresh:IRefresh = await Refresh.findOne({userid:decoded['id']})
+    const refresh:IRefresh = await Refresh.findOne({refresh:cookies['refreshToken'].toString()})
+    const user:IUser = await User.findOne({_id:refresh.userid})
     if(!refresh){
-        return res.status(400).json({error:"No refresh associated, this should happen?"})
+        return res.status(401).json({error:"No refresh associated, this should happen?"})
     }
     if(cookies['refreshToken'] !== refresh.refresh){
-        return res.status(400).json({error:"Refresh Incorrect, this should happen?"})
+        return res.status(401).json({error:"Refresh Incorrect, this should happen?"})
     }
-    const user:IUser = await User.findOne({$or:[{username:decoded['username']},{email:decoded['email']}]})
     const token = await sign({email:user.email,username:user.username,id:user._id.toString()},'day32tdbnhe789a2nebtasbdkj',{
         subject:user._id.toString(),
         expiresIn:"50s"
     })
     res.setHeader('Set-Cookie',`accessToken=${token}; HttpOnly; Max-Age=3600;Path=/;`)
-    return res.status(200).json({success:"Token refreshed, you're now still allowed to enter"})
+    return res.status(200).json(user)
 };
 export default handler;

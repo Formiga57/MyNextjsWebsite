@@ -7,6 +7,7 @@ import MainTrajectory from '../components/cards/MainTrajectory';
 import SubTrajectory from '../components/cards/SubTrajectory';
 import { useEffect, useState } from 'react';
 import AbilitiesCard from '../components/cards/AbilitiesCard';
+import Link from 'next/link';
 
 interface IParticleProps {
   type: number;
@@ -189,7 +190,7 @@ const Home: React.FC = () => {
               <IndexCard
                 title={'Contato'}
                 description={'Contatos para orçamentos ou informações.'}
-                href='/portfolio'
+                href='/contato'
               />
               <IndexCard
                 title={'Portfólio'}
@@ -247,7 +248,11 @@ const Home: React.FC = () => {
                 title='Adelphi Unesp - Torneio de Ingresso'
                 description={
                   <>
-                    Meu primeiro contato com o <i>Software</i> Xflr5
+                    Meu primeiro contato com o <i>Software</i> Xflr5, e dei
+                    início ao meu{' '}
+                    <Link href='/projetos/estudo-de-circuitos-osciladores-e-r%C3%A1dios'>
+                      Estudo de Radiofrequência
+                    </Link>
                   </>
                 }
               ></SubTrajectory>
