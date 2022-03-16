@@ -23,6 +23,7 @@ const handler = async (
     email: payload.email,
     subject: payload.subject,
     message: payload.message,
+    date: new Date(),
   };
   Contact.create(newContact);
 };

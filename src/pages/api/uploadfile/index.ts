@@ -8,7 +8,7 @@ interface IBody {
   id: string;
 }
 const storage = multer.diskStorage({
-  destination: './public/data2/uploads/',
+  destination: './public/posts/tmp',
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
@@ -28,7 +28,7 @@ const apiRoute = nextConnect<NextApiRequest, NextApiResponse>({
 apiRoute.use(upload.array('imgArray'));
 
 apiRoute.post((req, res) => {
-  const dir = `./public/data3/uploads/${req.body.id}/`;
+  const dir = `./public/posts/uploads/${req.body.id}/`;
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
@@ -41,7 +41,7 @@ apiRoute.post((req, res) => {
     console.log(`${i} ${file.originalname}`);
     if (path.extname(file.originalname) === '.md') {
       fs.rename(
-        './public/data2/uploads/' + file.originalname,
+        './public/posts/tmp' + file.originalname,
         dir + `content${path.extname(file.originalname)}`,
         function (err) {
           if (err) throw err;
@@ -49,7 +49,7 @@ apiRoute.post((req, res) => {
       );
     } else {
       fs.rename(
-        './public/data2/uploads/' + file.originalname,
+        './public/posts/uploads/' + file.originalname,
         dir + `${newname}${path.extname(file.originalname)}`,
         function (err) {
           if (err) throw err;

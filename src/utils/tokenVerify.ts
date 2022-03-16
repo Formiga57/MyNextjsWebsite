@@ -11,7 +11,7 @@ export const VerifyToken = async (
     if (tokenCookie) {
       const decoded = decode(tokenCookie);
       if (decoded['exp'] > new Date().getTime() / 1000) {
-        return res(tokenCookie);
+        return res('');
       }
     }
     if (!refreshCookie) {
@@ -25,14 +25,6 @@ export const VerifyToken = async (
     if (refreshCookie !== refresh.refresh) {
       rej('Refresh token invalid, this should happen?');
     }
-    const token = await sign(
-      { email: user.email, username: user.username, id: user._id.toString() },
-      'day32tdbnhe789a2nebtasbdkj',
-      {
-        subject: user._id.toString(),
-        expiresIn: '50s',
-      }
-    );
-    res(token);
+    res('');
   });
 };

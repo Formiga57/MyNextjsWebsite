@@ -6,6 +6,7 @@ export interface IContact {
   email: string;
   subject: string;
   message: string;
+  date: Date;
 }
 
 const contactSchema: Schema = new Schema<IContact>({
@@ -13,6 +14,7 @@ const contactSchema: Schema = new Schema<IContact>({
   email: { type: String, required: true },
   subject: { type: String, required: true },
   message: { type: String, required: true },
+  date: { type: Date, required: true },
 });
 export default mongoose.models.Contact ||
   mongoose.model<IContact>('Contact', contactSchema);

@@ -77,7 +77,7 @@ const Banner = styled.div<IBanner>`
   min-height: 300px;
   background-size: cover;
   ${(p) => {
-    return `background-image: url(http://localhost:3000/data3/uploads/${p.id}/banner.jpg);`;
+    return `background-image: url(http://localhost:3000/posts/uploads/${p.id}/banner.jpg);`;
   }}
 `;
 
@@ -133,6 +133,9 @@ const Image = styled.div`
 const components = { Images, Image };
 const Project = ({ post }) => {
   useEffect(() => {
+    axios.post(`http://localhost:3000/api/projects/projectPopularity`, {
+      id: post.id,
+    });
     renderMathInElement(document.body);
   }, []);
   const router = useRouter();
@@ -169,7 +172,7 @@ export const getStaticProps = async (ctx) => {
   const slug = ctx.params;
   const post = await GetPostBySlug(slug['slug']);
   const { data } = await axios(
-    `http://localhost:3000/data3/uploads/${post.id}/content.md`
+    `http://localhost:3000/posts/uploads/${post.id}/content.md`
   );
   const serializedMd = await serialize(data);
   return {

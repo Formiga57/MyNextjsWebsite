@@ -8,6 +8,9 @@ import SubTrajectory from '../components/cards/SubTrajectory';
 import { useEffect, useState } from 'react';
 import AbilitiesCard from '../components/cards/AbilitiesCard';
 import Link from 'next/link';
+import { GetList, IProject } from '../services/projectsApi';
+import ProjectCard from '../components/ProjectCard';
+import ProjectCardAnimated from '../components/ProjectCardAnimated';
 
 interface IParticleProps {
   type: number;
@@ -16,6 +19,7 @@ const Body = styled.div`
   background-image: url('/images/mathBackground.png');
   background-repeat: repeat;
   background-size: 1000px;
+  overflow: hidden;
 `;
 const VideoContainer = styled.div`
   height: 100vh;
@@ -172,7 +176,20 @@ const TrajectoryInnerContainer = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
+const ProjectCardContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 200px;
+`;
 const Home: React.FC = () => {
+  const [projects, setprojects] = useState<IProject[]>([]);
+  useEffect(() => {
+    GetList().then((res) => {
+      setprojects(res.sort((a, b) => b.popularity - a.popularity).slice(0, 3));
+    });
+  }, []);
   return (
     <TitleChanger>
       <Body>
@@ -342,14 +359,28 @@ const Home: React.FC = () => {
             ]}
           />
         </TrajectoryContainer>
-        <TitleSeparator>Meus Projetos</TitleSeparator>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+        <TitleSeparator>Meus Projetos Em Destaque</TitleSeparator>
+        <ProjectCardContainer>
+          {projects.map((i, j) => {
+            const d = new Date(i.date);
+            return (
+              <a
+                key={j}
+                href={`/projetos/${i.slug}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <ProjectCardAnimated
+                  offset={j}
+                  _id={i._id}
+                  date={d}
+                  description={i.description}
+                  title={i.title}
+                  toolsTags={i.toolsTags}
+                />
+              </a>
+            );
+          })}
+        </ProjectCardContainer>
       </Body>
     </TitleChanger>
   );

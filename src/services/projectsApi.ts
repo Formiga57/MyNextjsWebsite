@@ -8,6 +8,7 @@ export interface IProject {
   banner?: string;
   date: Date;
   toolsTags?: number[];
+  popularity: number;
 }
 
 const instance = axios.create({

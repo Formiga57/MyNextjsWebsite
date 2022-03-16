@@ -30,7 +30,7 @@ const Description = styled.p`
 const ContactContainer = styled.div`
   margin: auto;
   width: 60%;
-  background-color: #f5f5f5;
+  background-color: #fbfbfb;
   border: solid 0.3px black;
   border-radius: 10px;
   padding: 30px;
@@ -52,6 +52,39 @@ const Input = styled.input`
   width: 30%;
   font-size: 15pt;
   margin: auto;
+`;
+const InputMessage = styled.textarea`
+  border: inherit;
+  border-radius: inherit;
+  outline: inherit;
+  background: transparent;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+  padding: 5px;
+  height: 120px;
+  width: 60%;
+  font-size: 15pt;
+  resize: none;
+  font-family: 'Poppins', sans-serif;
+  margin: auto;
+`;
+const Button = styled.button`
+  box-sizing: content-box;
+  border-radius: 5px;
+  width: 80px;
+  padding: 10px;
+  text-align: center;
+  font-size: 15pt;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  margin: auto;
+  cursor: pointer;
+  transition: all 0.2s;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
 `;
 const Contato = () => {
   const [Submitted, setSubmitted] = useState<boolean>(false);
@@ -90,16 +123,15 @@ const Contato = () => {
             required
             {...register('subject', { required: true })}
           />
-          <Input
-            type='textbox'
+          <InputMessage
             placeholder='Mensagem'
             required
             {...register('message', { required: true })}
           />
           <br />
-          <button disabled={Submitted} type='submit'>
+          <Button disabled={Submitted} type='submit'>
             Enviar
-          </button>
+          </Button>
         </form>
       </ContactContainer>
     </Background>

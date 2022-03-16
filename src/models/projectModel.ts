@@ -7,7 +7,9 @@ export interface IProject {
   description: string;
   banner?: string;
   date: Date;
-  toolsTags?: Number[];
+  toolsTags?: number[];
+  popularity: number;
+  save?: () => void;
 }
 
 const projectSchema: Schema = new Schema<IProject>({
@@ -17,6 +19,7 @@ const projectSchema: Schema = new Schema<IProject>({
   date: { type: Date, required: true },
   slug: { type: String, required: true },
   toolsTags: [{ type: Number }],
+  popularity: { type: Number, required: true, default: 0 },
 });
 export default mongoose.models.Project ||
   mongoose.model<IProject>('Project', projectSchema);
