@@ -20,17 +20,48 @@ interface IAdminPostInfos {
   banner: string;
 }
 
+const Input = styled.input`
+  border: inherit;
+  border-radius: inherit;
+  outline: inherit;
+  background: transparent;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+  padding: 5px;
+  width: 80%;
+  font-size: 15pt;
+  margin: auto;
+`;
+
 const EditorContainer = styled.textarea<IEditorContainer>`
-  margin: 60px auto;
-  width: 60%;
+  font-family: 'Poppins';
+  margin: 30px auto;
+  width: 80%;
   height: 300px;
-  background-color: black;
-  color: white;
+  border-radius: 5px;
+  outline: none;
+  background-color: white;
+  color: black;
+  resize: none;
+  font-size: 12pt;
   ${(p) => {
     if (p.hovering) {
       return `background-color:red;`;
     }
   }}
+`;
+
+const DescContainer = styled.textarea`
+  margin: 30px auto;
+  width: 80%;
+  height: 150px;
+  border-radius: 5px;
+  outline: none;
+  background-color: white;
+  color: black;
+  resize: none;
+  font-family: 'Poppins';
+  font-size: 12pt;
 `;
 
 const UploadedImages = styled.div`
@@ -43,7 +74,7 @@ const UploadedImages = styled.div`
 
 const Preview = styled.div`
   margin: auto;
-  background-color: blue;
+  background-color: white;
   width: 60%;
 `;
 
@@ -80,33 +111,35 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
         serialize(Data?.content).then((serialized) => {
           setSerializedMd(serialized);
         });
-        console.log(data);
       });
   }, []);
 
   return (
-    <>
-      <input
+    <div style={{ margin: 'auto' }}>
+      <br />
+      <Input
         type='text'
         placeholder='Title'
-        value={Data?.title}
+        value={Data?.title || ' '}
         onChange={(e) => setData({ ...Data, title: e.target.value })}
       />
-      <textarea
-        placeholder='Desc'
-        value={Data?.description}
-        onChange={(e) => setData({ ...Data, description: e.target.value })}
-      />
-      <input
+      <Input
         type='text'
         placeholder='Slug'
-        value={Data?.slug}
+        value={Data?.slug || ' '}
         onChange={(e) => setData({ ...Data, slug: e.target.title })}
       />
+      <DescContainer
+        placeholder='Desc'
+        value={Data?.description || ' '}
+        onChange={(e) => setData({ ...Data, description: e.target.value })}
+      />
       <EditorContainer
-        value={Data?.content}
+        value={Data?.content || ' '}
         onChange={(e) => {
           setData({ ...Data, content: e.target.value });
+        }}
+        onBlur={() => {
           serialize(Data?.content).then((serialized) => {
             setSerializedMd(serialized);
           });
@@ -145,8 +178,13 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
                     .post('http://localhost:3000/api/uploadfile', formData)
                     .then((res) => {
                       let contentCopy = Data.content;
-                      contentCopy += `<Images>\n![alt text](http://localhost:3000${res.data.data[0]})\n</Images>`;
-                      setData({ ...Data, content: contentCopy });
+                      contentCopy += `\n<Images>\n![alt text](http://localhost:3000${res.data.data[0]})\n</Images>`;
+                      console.log(res.data.images);
+                      setData({
+                        ...Data,
+                        content: contentCopy,
+                        images: res.data.images,
+                      });
                     });
                 }
               }
@@ -166,9 +204,7 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
             setHoveringFile(false);
           }
         }}
-      >
-        dad
-      </EditorContainer>
+      ></EditorContainer>
       <UploadedImages>
         {Data?.images.map((i, j) => {
           if (i === Data.banner) {
@@ -216,7 +252,14 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
       >
         Enviar
       </button>
-    </>
+      <button
+        onClick={() => {
+          end(null);
+        }}
+      >
+        Voltar
+      </button>
+    </div>
   );
 };
 

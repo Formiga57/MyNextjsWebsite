@@ -12,6 +12,7 @@ import { GetList, IProject } from '../services/projectsApi';
 import ProjectCard from '../components/ProjectCard';
 import ProjectCardAnimated from '../components/ProjectCardAnimated';
 import { BsChevronCompactDown } from 'react-icons/bs';
+import Footer from '../components/Footer';
 interface IParticleProps {
   type: number;
 }
@@ -19,9 +20,10 @@ const Body = styled.div`
   background-image: url('/images/mathBackground.png');
   background-repeat: repeat;
   background-size: 1000px;
-  overflow: hidden;
   position: absolute;
   z-index: -999;
+  width: 100%;
+  overflow-x: hidden;
 `;
 const VideoContainer = styled.div`
   position: relative;
@@ -66,6 +68,7 @@ const NameDiv = styled.div`
     flex-basis: auto;
     h1 {
       font-size: 8vw;
+      text-align: center;
     }
     p {
       text-align: center;
@@ -85,6 +88,7 @@ const CardsDiv = styled.div`
   flex-wrap: wrap;
   @media (max-width: 700px) {
     flex-basis: auto;
+    margin-bottom: 20vh;
   }
 `;
 function randomInteger(min, max): number {
@@ -186,6 +190,8 @@ const ProjectCardContainer = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 200px;
+  overflow: hidden;
+  margin-bottom: 250px;
 `;
 const Home: React.FC = () => {
   const [projects, setprojects] = useState<IProject[]>([]);
@@ -286,10 +292,10 @@ const Home: React.FC = () => {
                     Realizei este curso para me orientar melhor de tecnologias
                     Cloud, e como estas podem ser utilizadas para rápido
                     provisionamento de servidores e serviçõs de I.A. Ao mesmo
-                    tempo, reparei um servidor HPE, em que utilizo atualmente
+                    tempo, reparei um servidor HPE. Assim, utilizo atualmente
                     para hospedar este site, para meus projetos e NAS. Com isto
-                    obtive experiência de serviços open source, sysadmin de
-                    linux e toda conectividade e infraestrutura de redes.
+                    obtive experiência de serviços open source, SysAdmin em
+                    linux e toda conectividade e infraestrutura de rede.
                   </>
                 }
               ></SubTrajectory>
@@ -416,6 +422,7 @@ const Home: React.FC = () => {
             );
           })}
         </ProjectCardContainer>
+        <Footer />
       </Body>
     </TitleChanger>
   );

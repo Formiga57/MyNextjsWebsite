@@ -2,9 +2,11 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 const Background = styled.div`
   position: absolute;
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   background-image: url('/images/mathBackground.png');
   background-repeat: repeat;
@@ -34,7 +36,7 @@ const ContactContainer = styled.div`
   border: solid 0.3px black;
   border-radius: 10px;
   padding: 30px;
-
+  margin-bottom: 250px;
   form {
     display: flex;
     justify-content: center;
@@ -49,7 +51,7 @@ const Input = styled.input`
   border-bottom: 2px solid black;
   box-sizing: border-box;
   padding: 5px;
-  width: 30%;
+  width: 80%;
   font-size: 15pt;
   margin: auto;
 `;
@@ -62,7 +64,7 @@ const InputMessage = styled.textarea`
   box-sizing: border-box;
   padding: 5px;
   height: 120px;
-  width: 60%;
+  width: 90%;
   font-size: 15pt;
   resize: none;
   font-family: 'Poppins', sans-serif;
@@ -95,46 +97,52 @@ const Contato = () => {
     window.location.replace('/');
   };
   return (
-    <Background>
-      <TitleDiv>
-        <Title>Contato</Title>
-        <Description>
-          Solicite informações, orçamentos ou curiosidades, eu irei responder o
-          quanto antes!
-        </Description>
-      </TitleDiv>
-      <ContactContainer>
-        <form onSubmit={handleSubmit((data) => handleData(data))}>
-          <Input
-            type='text'
-            placeholder='Nome'
-            required
-            {...register('name', { required: true })}
-          />
-          <Input
-            type='email'
-            placeholder='Email'
-            required
-            {...register('email', { required: true })}
-          />
-          <Input
-            type='text'
-            placeholder='Assunto'
-            required
-            {...register('subject', { required: true })}
-          />
-          <InputMessage
-            placeholder='Mensagem'
-            required
-            {...register('message', { required: true })}
-          />
-          <br />
-          <Button disabled={Submitted} type='submit'>
-            Enviar
-          </Button>
-        </form>
-      </ContactContainer>
-    </Background>
+    <>
+      <Header />
+      <Background>
+        <br />
+        <TitleDiv>
+          <Title>Contato</Title>
+          <Description>
+            Solicite informações, orçamentos ou curiosidades, eu irei responder
+            o quanto antes!
+          </Description>
+        </TitleDiv>
+        <ContactContainer>
+          <form onSubmit={handleSubmit((data) => handleData(data))}>
+            <Input
+              type='text'
+              placeholder='Nome'
+              required
+              {...register('name', { required: true })}
+            />
+            <Input
+              type='email'
+              placeholder='Email'
+              required
+              {...register('email', { required: true })}
+            />
+            <Input
+              type='text'
+              placeholder='Assunto'
+              required
+              {...register('subject', { required: true })}
+            />
+            <InputMessage
+              placeholder='Mensagem'
+              required
+              {...register('message', { required: true })}
+            />
+            <br />
+            <Button disabled={Submitted} type='submit'>
+              Enviar
+            </Button>
+          </form>
+        </ContactContainer>
+        <br />
+        <Footer />
+      </Background>
+    </>
   );
 };
 export default Contato;

@@ -1,11 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Project, { IProject } from '../../../../models/projectModel';
 import dbConnect from '../../../../utils/mongodb';
-
-interface IBody {
-  title: string;
-  description: string;
-}
+import fs from 'fs';
 
 const handler = async (
   { method, body }: NextApiRequest,
@@ -15,16 +11,21 @@ const handler = async (
   if (method !== 'POST') {
     return res.status(400).json({});
   }
-  const payload = body as IBody;
-  const slug = payload.title.toLowerCase().replaceAll(' ', '-');
   const newProject: IProject = {
-    title: payload.title,
-    description: payload.description,
+    title: ' ',
+    description: ' ',
     date: new Date(),
-    slug: slug,
+    slug: ' ',
     popularity: 0,
+    banner: ' ',
+    toolsTags: [],
   };
   const createdProj: IProject = await Project.create(newProject);
+  await fs.mkdirSync('./public/posts/uploads/' + createdProj._id.toString());
+  await fs.appendFileSync(
+    './public/posts/uploads/' + createdProj._id.toString() + '/content.md',
+    ''
+  );
   res.status(200).json({ id: createdProj._id.toString() });
 };
 export default handler;

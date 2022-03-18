@@ -44,7 +44,7 @@ const Description = styled.p`
   margin-left: 8px;
   font-size: 1.2vw;
   @media (max-width: 700px) {
-    font-size: 2vw;
+    font-size: 3vw;
     margin-top: 0;
   }
 `;

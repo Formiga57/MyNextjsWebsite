@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext, AuthProvider } from '../contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import { VerifyToken } from '../utils/tokenVerify';
 import SideBar from '../components/SideBar';
 import Post from '../components/dashboard/admin/Post';
 import PostList from '../components/dashboard/admin/PostList';
+import { VerifyRefresh } from '../services/securityApi';
 
 enum Pages {
   Hello,
@@ -17,12 +18,14 @@ enum Pages {
 
 const FlexContainer = styled.div`
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
 `;
 const ContentContainer = styled.div`
   position: relative;
   flex-grow: 1;
+  height: 100vh;
+  overflow-y: scroll;
 `;
 const SendProjectContainter = styled.div`
   position: absolute;
@@ -31,7 +34,16 @@ const SendProjectContainter = styled.div`
   transform: translate(-50%, -50%);
 `;
 const Dashboard = ({ authenticated }) => {
-  const { user, Page } = useContext(AuthContext);
+  const { user, Page, setUser } = useContext(AuthContext);
+  useEffect(() => {
+    VerifyRefresh()
+      .then((res) => {
+        setUser(res);
+      })
+      .catch((err) => {
+        window.location.replace('/login');
+      });
+  }, [setUser]);
   return (
     <FlexContainer>
       <SideBar roles={user?.roles}></SideBar>

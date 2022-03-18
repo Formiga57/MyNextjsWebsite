@@ -21,7 +21,7 @@ export const GetInfosFromId = async (id: string): Promise<IAdminPostInfos> => {
               './public/posts/uploads/' + id + '/' + i,
               'utf8'
             );
-            files.splice(j);
+            files.splice(j, 1);
           } catch (error) {
             console.log(error);
           }

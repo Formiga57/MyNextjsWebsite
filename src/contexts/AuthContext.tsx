@@ -6,6 +6,7 @@ interface IContextValues {
   user?: IUser;
   Page: number;
   setPage: (number) => void;
+  setUser: (IUser) => void;
 }
 
 interface IUser {
@@ -19,17 +20,8 @@ export const AuthContext = createContext({} as IContextValues);
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<IUser | undefined>(undefined);
   const [Page, setPage] = useState<number>(0);
-  useEffect(() => {
-    VerifyRefresh()
-      .then((res) => {
-        setUser(res);
-      })
-      .catch((err) => {
-        window.location.replace('/login');
-      });
-  }, [setUser]);
   return (
-    <AuthContext.Provider value={{ user, Page, setPage }}>
+    <AuthContext.Provider value={{ user, Page, setPage, setUser }}>
       {children}
     </AuthContext.Provider>
   );

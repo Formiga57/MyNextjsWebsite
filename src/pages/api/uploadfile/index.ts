@@ -27,8 +27,9 @@ const apiRoute = nextConnect<NextApiRequest, NextApiResponse>({
 
 apiRoute.use(upload.array('imgArray'));
 
-apiRoute.post((req, res) => {
+apiRoute.post(async (req, res) => {
   let savedFiles = [];
+  let savedFileNames = [];
   const dir = `./public/posts/uploads/${req.body.id}/`;
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -58,9 +59,22 @@ apiRoute.post((req, res) => {
         dir.substring(8) +
           `${file.originalname}${path.extname(file.originalname)}`
       );
+      savedFileNames.push(
+        file.originalname.toLowerCase() + path.extname(file.originalname)
+      );
     }
   }
-  res.status(200).json({ data: savedFiles });
+  try {
+    let files = fs.readdirSync('./public/posts/uploads/' + req.body.id);
+    files.forEach((i, j) => {
+      if (i === 'content.md') {
+        files.splice(j, 1);
+      }
+    });
+    res.status(200).json({ data: savedFiles, images: files });
+  } catch (error) {
+    res.status(400).json({});
+  }
 });
 
 export default apiRoute;
