@@ -22,6 +22,7 @@ const handler = async (
     description: payload.description,
     date: new Date(),
     slug: slug,
+    popularity: 0,
   };
   const createdProj: IProject = await Project.create(newProject);
   res.status(200).json({ id: createdProj._id.toString() });

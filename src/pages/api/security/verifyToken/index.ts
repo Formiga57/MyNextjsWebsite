@@ -16,14 +16,13 @@ const parseCookie = (str: string): object =>
 const handler = async ({ method, body,headers }: NextApiRequest,res: NextApiResponse) => {
     await dbConnect()
     const cookies = parseCookie(headers.cookie)
-    // if(!cookies['accessToken']){
-    //     return res.status(401).json({error:"No token, go to login page!"})
-    // }
-    // const decoded = decode(cookies['accessToken'])
-    // const user:IUser = await User.findOne({$or:[{username:decoded['username']},{email:decoded['email']}]})
-    // if(decoded['exp'] > new Date().getTime()/1000){
-    //     return res.status(200).json(user)
-    // }
+    if(cookies['accessToken']){
+        const decoded = decode(cookies['accessToken'])
+        const user = await User.findOne({$or:[{username:decoded['username']},{email:decoded['email']}]})
+        if(decoded['exp'] > new Date().getTime()/1000){
+            return res.status(200).json(user)
+        }
+    }
     if(!cookies['refreshToken']){
         return res.status(401).json({error:"No refresh, expired!"})
     }

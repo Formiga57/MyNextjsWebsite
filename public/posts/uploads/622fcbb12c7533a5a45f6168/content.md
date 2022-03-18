@@ -4,6 +4,6 @@ Desenvolvi um aplicativo em Java utilizando o _Android Studio_, em que um celula
 
 ## Fórmula de euler
 
-A fórmula de euler é:
+A fórmula de euler é esta aqui haha!:
 
 \\[e^\{i\\theta\}=cos \\phi + i sen \\phi\\]

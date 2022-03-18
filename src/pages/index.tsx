@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { GetList, IProject } from '../services/projectsApi';
 import ProjectCard from '../components/ProjectCard';
 import ProjectCardAnimated from '../components/ProjectCardAnimated';
-
+import { BsChevronCompactDown } from 'react-icons/bs';
 interface IParticleProps {
   type: number;
 }
@@ -20,8 +20,11 @@ const Body = styled.div`
   background-repeat: repeat;
   background-size: 1000px;
   overflow: hidden;
+  position: absolute;
+  z-index: -999;
 `;
 const VideoContainer = styled.div`
+  position: relative;
   height: 100vh;
   width: 100%;
   z-index: -2;
@@ -55,6 +58,7 @@ const NameDiv = styled.div`
     font-size: 1.8vw;
     color: #ffffffe1;
     text-indent: 3.2vw;
+    text-align: justify;
   }
   @media (max-width: 700px) {
     padding: 0;
@@ -194,6 +198,19 @@ const Home: React.FC = () => {
     <TitleChanger>
       <Body>
         <VideoContainer>
+          <p
+            style={{
+              position: 'absolute',
+              bottom: '10px',
+              color: 'white',
+              fontSize: '45pt',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: '999',
+            }}
+          >
+            <BsChevronCompactDown />
+          </p>
           <VideoFilterContainer>
             <Particle type={1} />
             <Particle type={2} />
@@ -201,7 +218,12 @@ const Home: React.FC = () => {
             <Particle type={4} />
             <NameDiv>
               <h1>Vinícius Formigone</h1>
-              <p>Opa, eai tudo bem?</p>
+              <p>
+                Estudo Engenharia Aeronáutica na EESC - USP, possuo
+                conhecimentos em Mecânica, Eletrônica e Elétrica. Tenho
+                experiência em Programação, trabalhando há 2 anos como
+                Freelancer.
+              </p>
             </NameDiv>
             <CardsDiv>
               <IndexCard
@@ -232,7 +254,7 @@ const Home: React.FC = () => {
               description='Cursei meu ensino médio juntamente com o ensino técnico em
             Mecatrônica, devido minha proximidade à matéria de eletrônica, junto
             às aulas da faculdade de Cálculo, decidi por estudar mais afundo por
-            conta própria as lacunas do meu aprendizado.'
+            conta própria conteúdos mais avançados que tenho interesse para projetos.'
             >
               <SubTrajectory
                 img='/images/externos/TSC.png'
@@ -241,8 +263,10 @@ const Home: React.FC = () => {
                 description={
                   <>
                     Sendo uma iniciativa do banco JP. Morgan juntamente ao
-                    Centro Paula Souza, experiencei o passo a passo para criação
-                    de <i>Startups</i>
+                    Centro Paula Souza, aprendi o processo de criação de{' '}
+                    <i>Startups</i>. Obtive soft skills ao apresentar um Pitch
+                    de nosso projeto para investidores, sendo um dos grupos
+                    finalistas e alcançando o terceiro lugar.
                   </>
                 }
               ></SubTrajectory>
@@ -251,13 +275,23 @@ const Home: React.FC = () => {
               img='/images/externos/unesp.png'
               date='2021'
               title='Unesp São João da Boa Vista - Engenharia Aeronáutica'
-              description='adhawuiydiawdniawnmd.'
+              description='Meu primeiro contato com a faculdade e com o curso de Engenharia Aeronáutica. Por conta da Covid-19, as aulas tiveram de ser online, o que me favoreceu para estudar programação de simulações e representações, aplicadas no meu estudo das matérias.'
             >
               <SubTrajectory
                 img='/images/externos/fundacao-fat.png'
                 date='2021'
                 title='Fundação FAT - Computação em Nuvem e I.A'
-                description={<>fgdgfdgdfgdfgdfg</>}
+                description={
+                  <>
+                    Realizei este curso para me orientar melhor de tecnologias
+                    Cloud, e como estas podem ser utilizadas para rápido
+                    provisionamento de servidores e serviçõs de I.A. Ao mesmo
+                    tempo, reparei um servidor HPE, em que utilizo atualmente
+                    para hospedar este site, para meus projetos e NAS. Com isto
+                    obtive experiência de serviços open source, sysadmin de
+                    linux e toda conectividade e infraestrutura de redes.
+                  </>
+                }
               ></SubTrajectory>
               <SubTrajectory
                 img='/images/externos/adelphi.jpg'

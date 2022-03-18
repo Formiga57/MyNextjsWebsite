@@ -28,15 +28,12 @@ const apiRoute = nextConnect<NextApiRequest, NextApiResponse>({
 apiRoute.use(upload.array('imgArray'));
 
 apiRoute.post((req, res) => {
+  let savedFiles = [];
   const dir = `./public/posts/uploads/${req.body.id}/`;
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
   for (var i = 0; i < Object.keys(req['files']).length; i++) {
-    let newname: string = `${i}`;
-    if (i === Number(req.body.banner)) {
-      newname = 'banner';
-    }
     var file = req['files'][i];
     if (path.extname(file.originalname) === '.md') {
       fs.rename(
@@ -49,14 +46,21 @@ apiRoute.post((req, res) => {
     } else {
       fs.rename(
         './public/posts/tmp/' + file.originalname,
-        dir + `${newname}${path.extname(file.originalname)}`,
+        dir +
+          `${file.originalname.toLowerCase()}${path
+            .extname(file.originalname)
+            .toLowerCase()}`,
         function (err) {
           if (err) throw err;
         }
       );
+      savedFiles.push(
+        dir.substring(8) +
+          `${file.originalname}${path.extname(file.originalname)}`
+      );
     }
   }
-  res.status(200).json({ data: 'success' });
+  res.status(200).json({ data: savedFiles });
 });
 
 export default apiRoute;
