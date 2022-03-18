@@ -27,6 +27,7 @@ const PostList: React.FC = () => {
           return (
             <div onClick={() => setEditing(i._id)}>
               <ProjectCard
+                banner={i.banner}
                 _id={i._id}
                 date={d}
                 description={i.description}

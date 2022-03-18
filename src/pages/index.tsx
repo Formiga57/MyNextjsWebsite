@@ -404,6 +404,7 @@ const Home: React.FC = () => {
                 style={{ textDecoration: 'none' }}
               >
                 <ProjectCardAnimated
+                  banner={i.banner}
                   offset={j}
                   _id={i._id}
                   date={d}

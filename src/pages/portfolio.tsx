@@ -38,6 +38,7 @@ const Portfolio = () => {
           return (
             <Link key={j} href={`/projetos/${i.slug}`}>
               <ProjectCard
+                banner={i.banner}
                 _id={i._id}
                 date={d}
                 description={i.description}

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import OnScreen from './OnScreen';
 const ToolsId = ['CAD', 'JavaScript', 'C#', 'TypeScript', 'Java', 'Python'];
 interface IProps {
+  banner: string;
   _id: string;
   title: string;
   description: string;
@@ -10,8 +11,13 @@ interface IProps {
   toolsTags: number[];
   offset?: number;
 }
+interface IContainer {
+  visible: boolean;
+  offset: number;
+}
 interface IProjectCardBanner {
   id: string;
+  banner: string;
 }
 
 const ProjectCardBanner = styled.div<IProjectCardBanner>`
@@ -20,10 +26,11 @@ const ProjectCardBanner = styled.div<IProjectCardBanner>`
   background-size: cover;
   background-position-y: 50%;
   ${(p) => {
-    return `background-image: url(http://localhost:3000/posts/uploads/${p.id}/banner.jpg);`;
+    return `background-image: url(http://localhost:3000/posts/uploads/${p.id}/${p.banner});`;
   }}
 `;
-const Container = styled.div`
+const Container = styled.div<IContainer>`
+  position: relative;
   margin: 10px;
   width: 290px;
   background-color: white;
@@ -36,7 +43,7 @@ const Container = styled.div`
   transition: all 0.2s;
   &:hover {
     border-radius: 5px;
-    border: solid 0.7px #0000006a;
+    border: solid 2px #0000006a;
   }
   &:hover ${ProjectCardBanner} {
     background-clip: 200px;
@@ -71,6 +78,8 @@ const ProjectCardDesc = styled.p`
   padding-left: 10px;
 `;
 const ProjectCardDate = styled.p`
+  position: absolute;
+  bottom: 5px;
   font-size: 10pt;
   padding-left: 10px;
 `;
@@ -78,6 +87,7 @@ const ProjectCardTools = styled.p`
   font-size: 10pt;
 `;
 const ProjectCard: React.FC<IProps> = ({
+  banner,
   _id,
   description,
   toolsTags,
@@ -89,7 +99,7 @@ const ProjectCard: React.FC<IProps> = ({
   const isVisible = OnScreen(ref);
   return (
     <Container visible={isVisible} offset={offset}>
-      <ProjectCardBanner id={_id} />
+      <ProjectCardBanner id={_id} banner={banner} />
       <ProjectCardTitle ref={ref}>{title}</ProjectCardTitle>
       <ProjectCardDesc>
         {description.substring(0, 120)}
