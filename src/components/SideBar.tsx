@@ -19,11 +19,13 @@ const Container = styled.div<IContainer>`
   transition: ease-out 0.4s;
   height: 100vh;
   background-color: #0a022f;
+  flex-grow: 0;
+  flex-shrink: 0;
   ${(p) => {
     if (p.expanded) {
-      return 'width:280px;';
+      return 'flex-basis:280px;';
     } else {
-      return 'width:80px;';
+      return 'flex-basis:80px;';
     }
   }}
 `;
