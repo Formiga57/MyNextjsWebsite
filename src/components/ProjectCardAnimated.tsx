@@ -26,7 +26,7 @@ const ProjectCardBanner = styled.div<IProjectCardBanner>`
   background-size: cover;
   background-position-y: 50%;
   ${(p) => {
-    return `background-image: url(http://localhost:3000/posts/uploads/${p.id}/${p.banner});`;
+    return `background-image: url(https://formiga57.xyz/posts/uploads/${p.id}/${p.banner});`;
   }}
 `;
 const Container = styled.div<IContainer>`

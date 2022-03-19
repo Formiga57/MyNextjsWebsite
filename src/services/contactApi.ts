@@ -12,7 +12,7 @@ export interface IProject {
 }
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000/api/contact',
+  baseURL: 'https://site.formiga57.xyz/api/contact',
   timeout: 15000,
 });
 

@@ -13,7 +13,7 @@ export interface IProject {
 }
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000/api/projects',
+  baseURL: 'https://formiga57.xyz/api/projects',
   timeout: 15000,
 });
 
@@ -37,7 +37,7 @@ export const GetPostInfo = async (
 export const UploadImages = async (
   formData: FormData
 ): Promise<AxiosResponse<any, any>> => {
-  return await axios.post('http://localhost:3000/api/uploadfile', formData);
+  return await axios.post('https://formiga57.xyz/api/uploadfile', formData);
 };
 export const UpdatePost = async (
   Data: IAdminPostInfos,
