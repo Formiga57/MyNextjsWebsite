@@ -16,6 +16,7 @@
     "babel-plugin-inline-react-svg": "^2.0.1",
     "bcryptjs": "^2.4.3",
     "better-react-mathjax": "^1.0.3",
+    "dotenv": "^16.0.0",
     "jsonwebtoken": "^8.5.1",
     "katex": "^0.15.3",
     "mathjax": "^3.2.0",
