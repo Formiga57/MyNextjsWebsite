@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 export interface IProject {
   slug: string;
@@ -24,3 +24,10 @@ export const GetList = (): Promise<IProject[]> => {
     res(data);
   });
 };
+
+export const AddPopularity = (id:string) =>{
+  instance.post('/projectPopularity',{id:id})
+}
+export const GetPostInfo = async (id:string):Promise<AxiosResponse<any, any>> =>{
+  return await instance.post('/getPostInfo',{_id:id})
+}

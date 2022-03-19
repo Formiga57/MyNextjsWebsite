@@ -12,6 +12,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
 
 import 'katex/dist/katex.min.css';
+import { AddPopularity } from '../../services/projectsApi';
 const Meses = [
   'Janeiro',
   'Fevereiro',
@@ -134,9 +135,7 @@ const Image = styled.div`
 const components = { Images, Image };
 const Project = ({ post }) => {
   useEffect(() => {
-    axios.post(`http://localhost:3000/api/projects/projectPopularity`, {
-      id: post.id,
-    });
+    AddPopularity(post.id)
     renderMathInElement(document.body);
   }, []);
   const router = useRouter();

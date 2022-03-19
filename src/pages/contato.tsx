@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import { SendMessage } from '../services/contactApi';
 const Background = styled.div`
   position: absolute;
   min-height: 100%;
@@ -93,7 +94,7 @@ const Contato = () => {
   const { register, handleSubmit } = useForm();
   const handleData = (data) => {
     setSubmitted(true);
-    axios.post('http://localhost:3000/api/contact', data);
+    SendMessage(data)
     window.location.replace('/');
   };
   return (

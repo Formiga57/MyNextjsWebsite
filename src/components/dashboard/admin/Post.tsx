@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
+import { GetPostInfo } from '../../../services/projectsApi';
 
 interface IEditorContainer {
   hovering: boolean;
@@ -103,15 +104,13 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
   const [serializedMd, setSerializedMd] =
     useState<MDXRemoteSerializeResult<Record<string, unknown>>>();
   useEffect(() => {
-    axios
-      .post(`http://localhost:3000/api/projects/getPostInfo/`, { _id: _id })
-      .then((res) => {
-        const data = res.data as IAdminPostInfos;
+    GetPostInfo(_id).then(res=>{
+      const data = res.data as IAdminPostInfos;
         setData(data);
         serialize(Data?.content).then((serialized) => {
           setSerializedMd(serialized);
         });
-      });
+    })
   }, []);
 
   return (
