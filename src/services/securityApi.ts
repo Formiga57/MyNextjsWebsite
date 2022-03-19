@@ -5,6 +5,12 @@ interface ILogin {
   password: string;
   persist: boolean;
 }
+interface IRegister {
+  user: string;
+  email: string;
+  password: string;
+  token: string;
+}
 
 export interface IUser {
   id: string;
@@ -14,7 +20,7 @@ export interface IUser {
 }
 
 const instance = axios.create({
-  baseURL: 'https://formiga57.xyz/api/security/login',
+  baseURL: 'https://formiga57.xyz/api/security',
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
@@ -27,7 +33,7 @@ export const HandleLogin = ({
 }: ILogin): Promise<IUser> => {
   return new Promise((res, rej) => {
     const result = instance
-      .post('', {
+      .post('/login', {
         identifier: identifier,
         password: password,
         persist: persist,
@@ -45,12 +51,36 @@ export const HandleLogin = ({
 };
 export const VerifyRefresh = (): Promise<IUser | null> => {
   return new Promise((res, rej) => {
-    const result = axios
-      .post('https://formiga57.xyz/api/security/verifyToken', {})
+    const result = instance
+      .post('/verifyToken', {})
       .then((result) => {
         if (result.status === 200) {
           const data: IUser = result.data;
           res(data);
+        } else {
+          rej();
+        }
+      })
+      .catch((err) => rej(err));
+  });
+};
+export const HandleRegister = ({
+  user,
+  email,
+  password,
+  token,
+}: IRegister): Promise<string> => {
+  return new Promise((res, rej) => {
+    const result = instance
+      .post('/register', {
+        user: user,
+        email: email,
+        password: password,
+        token: token,
+      })
+      .then((result) => {
+        if (result.status === 200) {
+          res('ok');
         } else {
           rej();
         }

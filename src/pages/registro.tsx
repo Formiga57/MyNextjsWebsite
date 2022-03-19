@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { HandleLogin } from '../services/securityApi';
+import { HandleLogin, HandleRegister } from '../services/securityApi';
 const Input = styled.input`
   border: inherit;
   border-radius: inherit;
@@ -75,24 +75,31 @@ const Button = styled.button`
     color: white;
   }
 `;
-const Login = () => {
+const Registro = () => {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    HandleLogin(data)
-      .then((res) => window.location.replace('/painel'))
+    HandleRegister(data)
+      .then((res) => window.location.replace('/login'))
       .catch((err) => {});
   };
   return (
     <Background>
       <BackgroundFilter>
-        <TitleDiv>Log-in</TitleDiv>
+        <TitleDiv>Registro</TitleDiv>
         <Container>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               placeholder='Usuário / Email'
               type='text'
               required
-              {...register('identifier', { required: true })}
+              {...register('user', { required: true })}
+            />
+            <br />
+            <Input
+              placeholder='Email'
+              type='text'
+              required
+              {...register('email', { required: true })}
             />
             <br />
             <Input
@@ -102,15 +109,12 @@ const Login = () => {
               {...register('password', { required: true })}
             />
             <br />
-            <div style={{ textAlign: 'center' }}>
-              Manter Logado
-              <Input
-                style={{ height: '20px' }}
-                type='checkbox'
-                placeholder='Manter logado'
-                {...register('persist')}
-              />
-            </div>
+            <Input
+              placeholder='Token'
+              type='text'
+              required
+              {...register('token', { required: true })}
+            />
             <br />
             <Button type='submit'>Enviar</Button>
           </form>
@@ -120,4 +124,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registro;

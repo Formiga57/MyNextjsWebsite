@@ -30,8 +30,9 @@ const VideoContainer = styled.div`
   height: 100vh;
   width: 100%;
   z-index: -2;
-  background-image: url('/images/imgteste.png');
+  background-image: url('/images/heroIndex.jpg');
   background-size: cover;
+  background-position: right;
   background-attachment: fixed;
 `;
 const VideoFilterContainer = styled.div`

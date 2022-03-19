@@ -2,12 +2,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import User, { IUser } from '../../../../models/userModel';
 import dbConnect from '../../../../utils/mongodb';
 import { hash } from 'bcryptjs';
+import Token, { IToken } from '../../../../models/tokenModel';
 
 interface IBody {
-  username: string;
+  user: string;
   email: string;
   password: string;
-  key: string;
+  token: string;
 }
 // prettier-ignore
 const handler = async ({ method, body }: NextApiRequest,res: NextApiResponse) => {
@@ -16,14 +17,23 @@ const handler = async ({ method, body }: NextApiRequest,res: NextApiResponse) =>
     return res.status(400).json({});
   }
   const payload = body as IBody;
-  const existentUser = await User.findOne({$or:[{username:payload.username},{email:payload.email}]})
+  const existentUser:IUser = await User.findOne({$or:[{username:payload.user},{email:payload.email}]})
   if(existentUser){
     return res.status(400).json({error:"Usuário já existente"});
   }
+  const existentToken:IToken = await Token.findOne({token:payload.token})
+  if(!existentToken){
+    return res.status(400).json({error:"Token não existe"});
+  }
+  if(existentToken.userId){
+    return res.status(400).json({error:"Token já utilizado"});
+  }
+  existentToken.userId = existentUser._id.toString()
+  existentToken.save()
   const passHash = await hash(payload.password,10)
   const newUser:IUser = {
     email: payload.email,
-    username: payload.username,
+    username: payload.user,
     password: passHash,
     roles: []
   }
