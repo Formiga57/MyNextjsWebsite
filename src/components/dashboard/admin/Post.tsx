@@ -1,11 +1,13 @@
-import axios from 'axios';
-import { GetServerSideProps } from 'next';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
-import { GetPostInfo } from '../../../services/projectsApi';
+// import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
+import {
+  GetPostInfo,
+  UpdatePost,
+  UploadImages,
+} from '../../../services/projectsApi';
 
 interface IEditorContainer {
   hovering: boolean;
@@ -104,13 +106,13 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
   const [serializedMd, setSerializedMd] =
     useState<MDXRemoteSerializeResult<Record<string, unknown>>>();
   useEffect(() => {
-    GetPostInfo(_id).then(res=>{
+    GetPostInfo(_id).then((res) => {
       const data = res.data as IAdminPostInfos;
-        setData(data);
-        serialize(Data?.content).then((serialized) => {
-          setSerializedMd(serialized);
-        });
-    })
+      setData(data);
+      serialize(Data?.content).then((serialized) => {
+        setSerializedMd(serialized);
+      });
+    });
   }, []);
 
   return (
@@ -144,47 +146,28 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
           });
         }}
         hovering={hoveringFile}
-        // onClick={() => {
-        //   const formData = new FormData();
-        //   Files.forEach((i) => {
-        //     formData.append('imgArray', i, i.name);
-        //   });
-        //   formData.append('id', 'testfileshahahahaha');
-        //   axios
-        //     .post('http://localhost:3000/api/uploadfile', formData)
-        //     .then((res) => {
-        //       setUploadedImages(res.data.data);
-        //     });
-        // }}
         onDrop={(e) => {
           e.preventDefault();
           if (e.dataTransfer.items) {
             for (var i = 0; i < e.dataTransfer.items.length; i++) {
               if (e.dataTransfer.items[i].kind === 'file') {
                 var file = e.dataTransfer.items[i].getAsFile();
-                console.log('File: ' + file.name + ' ' + file.type);
                 setFiles([...Files, file]);
-                console.log(Files);
                 const name = file.name;
                 if (name.substring(name.length - 3) === '.md') {
-                  console.log('É markdown');
                 } else if (name.substring(name.length - 4) === '.jpg') {
-                  console.log('É jpg');
                   const formData = new FormData();
                   formData.append('id', _id);
                   formData.append('imgArray', file, name);
-                  axios
-                    .post('http://localhost:3000/api/uploadfile', formData)
-                    .then((res) => {
-                      let contentCopy = Data.content;
-                      contentCopy += `\n<Images>\n![alt text](http://localhost:3000${res.data.data[0]})\n</Images>`;
-                      console.log(res.data.images);
-                      setData({
-                        ...Data,
-                        content: contentCopy,
-                        images: res.data.images,
-                      });
+                  UploadImages(formData).then((res) => {
+                    let contentCopy = Data.content;
+                    contentCopy += `\n<Images>\n![alt text](http://localhost:3000${res.data.data[0]})\n</Images>`;
+                    setData({
+                      ...Data,
+                      content: contentCopy,
+                      images: res.data.images,
                     });
+                  });
                 }
               }
             }
@@ -239,14 +222,9 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
       <button
         type='submit'
         onClick={() => {
-          axios
-            .post(`http://localhost:3000/api/projects/updatePostInfo/`, {
-              ...Data,
-              _id: _id,
-            })
-            .then((res) => {
-              end(null);
-            });
+          UpdatePost(Data, _id).then((res) => {
+            end(null);
+          });
         }}
       >
         Enviar

@@ -1,13 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext, AuthProvider } from '../contexts/AuthContext';
-import { useForm } from 'react-hook-form';
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 import styled from 'styled-components';
-import EventEmitter from 'events';
-import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import { VerifyToken } from '../utils/tokenVerify';
 import SideBar from '../components/SideBar';
-import Post from '../components/dashboard/admin/Post';
 import PostList from '../components/dashboard/admin/PostList';
 import { VerifyRefresh } from '../services/securityApi';
 

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -94,7 +93,7 @@ const Contato = () => {
   const { register, handleSubmit } = useForm();
   const handleData = (data) => {
     setSubmitted(true);
-    SendMessage(data)
+    SendMessage(data);
     window.location.replace('/');
   };
   return (

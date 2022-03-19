@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { GetList, IProject } from '../../../services/projectsApi';
+import { GetList, IProject, NewProject } from '../../../services/projectsApi';
 import styled from 'styled-components';
 import ProjectCard from '../../ProjectCard';
 import Post from './Post';
 import { AiOutlinePlus } from 'react-icons/ai';
-import axios from 'axios';
 
 const ProjectAddButton = styled.div`
   display: flex;
@@ -64,11 +63,9 @@ const PostList: React.FC = () => {
         })}
         <ProjectAddButton
           onClick={() => {
-            axios
-              .post('http://localhost:3000/api/projects/newProject')
-              .then(({ data }) => {
-                setEditing(data.id);
-              });
+            NewProject().then(({ data }) => {
+              setEditing(data.id);
+            });
           }}
         >
           <AiOutlinePlus></AiOutlinePlus>

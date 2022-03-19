@@ -1,18 +1,15 @@
-// @ts-nocheck
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { GetServerSideProps } from 'next';
 import styled from 'styled-components';
 import { GetPostBySlug } from '../../utils/projectsApi';
-import axios from 'axios';
-import Head from 'next/head';
-var ReactDOMServer = require('react-dom/server');
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
 
 import 'katex/dist/katex.min.css';
 import { AddPopularity } from '../../services/projectsApi';
+import { GetStaticPaths } from 'next';
+import axios from 'axios';
 const Meses = [
   'Janeiro',
   'Fevereiro',
@@ -28,6 +25,9 @@ const Meses = [
   'Dezembro',
 ];
 
+interface IImage {
+  src: string;
+}
 interface IBanner {
   id: string;
 }
@@ -126,7 +126,7 @@ const Images = styled.div`
     }
   }
 `;
-const Image = styled.div`
+const Image = styled.div<IImage>`
   width: 50%;
   ${(p) => {
     return `background-image: url(${p.src});`;
@@ -135,7 +135,7 @@ const Image = styled.div`
 const components = { Images, Image };
 const Project = ({ post }) => {
   useEffect(() => {
-    AddPopularity(post.id)
+    AddPopularity(post.id);
     renderMathInElement(document.body);
   }, []);
   const router = useRouter();
