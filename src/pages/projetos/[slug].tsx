@@ -78,7 +78,7 @@ const Banner = styled.div<IBanner>`
   min-height: 300px;
   background-size: cover;
   ${(p) => {
-    return `background-image: url(http://localhost:3000/posts/uploads/${p.id}/banner.jpg);`;
+    return `background-image: url(https://formiga57.xyz/posts/uploads/${p.id}/banner.jpg);`;
   }}
 `;
 
@@ -172,7 +172,7 @@ export const getStaticProps = async (ctx) => {
   const slug = ctx.params;
   const post = await GetPostBySlug(slug['slug']);
   const { data } = await axios(
-    `http://localhost:3000/posts/uploads/${post.id}/content.md`
+    `https://formiga57.xyz/posts/uploads/${post.id}/content.md`
   );
   const serializedMd = await serialize(data);
   return {
@@ -190,7 +190,11 @@ export const getStaticProps = async (ctx) => {
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
   const paths = await GetAllSlugs();
   return {
-    paths: paths, //indicates that no page needs be created at build time
+    paths: paths.map((p) => {
+      return {
+        params: { slug: p },
+      };
+    }), //indicates that no page needs be created at build time
     fallback: 'blocking', //indicates the type of fallback
   };
 };
