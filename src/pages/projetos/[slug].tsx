@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { GetPostBySlug } from '../../utils/projectsApi';
+import { GetAllSlugs, GetPostBySlug } from '../../utils/projectsApi';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
@@ -188,8 +188,9 @@ export const getStaticProps = async (ctx) => {
   };
 };
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
+  const paths = await GetAllSlugs();
   return {
-    paths: [], //indicates that no page needs be created at build time
+    paths: paths, //indicates that no page needs be created at build time
     fallback: 'blocking', //indicates the type of fallback
   };
 };

@@ -5,6 +5,15 @@ export const GetPostBySlug = async (slug) => {
   await dbConnect();
   return Project.findOne({ slug: slug });
 };
+export const GetAllSlugs = async () => {
+  const slugs = [];
+  await dbConnect();
+  const projects: IProject[] = await Project.find();
+  projects.forEach((element) => {
+    slugs.push(element.slug);
+  });
+  return slugs;
+};
 export const GetInfosFromId = async (id: string): Promise<IAdminPostInfos> => {
   return new Promise(async (res, rej) => {
     const project: IProject = await Project.findOne({ _id: id });
