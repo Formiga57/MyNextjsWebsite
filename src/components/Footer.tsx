@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BsGithub, BsLinkedin, BsDiscord } from 'react-icons/bs';
+import { MdEmail } from 'react-icons/md';
 
 const Container = styled.div`
   position: absolute;
@@ -63,6 +64,12 @@ const Footer = () => {
           target='_blank'
         >
           <BsDiscord />
+        </Link>
+        <Link
+          href='mailto:viniciusformigone.s@gmail.com'
+          style={{ fontSize: '32pt' }}
+        >
+          <MdEmail />
         </Link>
       </Contacts>
     </Container>
