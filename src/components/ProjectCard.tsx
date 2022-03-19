@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { address } from '../utils/values';
 const ToolsId = ['CAD', 'JavaScript', 'C#', 'TypeScript', 'Java', 'Python'];
 interface IProps {
   _id: string;
@@ -20,7 +21,7 @@ const ProjectCardBanner = styled.div<IProjectCardBanner>`
   background-size: cover;
   background-position-y: 50%;
   ${(p) => {
-    return `background-image: url(https://formiga57.xyz/posts/uploads/${p.id}/${p.banner});`;
+    return `background-image: url(${address}/posts/uploads/${p.id}/${p.banner});`;
   }}
 `;
 const Container = styled.div`

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { address } from '../utils/values';
 
 interface ILogin {
   identifier: string;
@@ -20,7 +21,7 @@ export interface IUser {
 }
 
 const instance = axios.create({
-  baseURL: 'https://formiga57.xyz/api/security',
+  baseURL: `${address}/api/security`,
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json',

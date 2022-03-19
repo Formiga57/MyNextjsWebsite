@@ -12,6 +12,7 @@ import 'katex/dist/katex.min.css';
 import { AddPopularity } from '../../services/projectsApi';
 import { GetStaticPaths } from 'next';
 import axios from 'axios';
+import { address } from '../../utils/values';
 const Meses = [
   'Janeiro',
   'Fevereiro',
@@ -57,12 +58,18 @@ const PostContainer = styled.div`
   width: 80%;
   margin: 0 auto;
   background-color: white;
+  @media (max-width: 700px) {
+    width: 95%;
+  }
 `;
 
 const TopContainer = styled.div`
   display: flex;
   width: 100%;
   border-bottom: solid 0.5px black;
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
 `;
 
 const TitleTopContainer = styled.div`
@@ -80,7 +87,7 @@ const Banner = styled.div<IBanner>`
   min-height: 300px;
   background-size: cover;
   ${(p) => {
-    return `background-image: url(https://formiga57.xyz/posts/uploads/${p.id}/banner.jpg);`;
+    return `background-image: url(${address}/posts/uploads/${p.id}/banner.jpg);`;
   }}
 `;
 
@@ -101,6 +108,9 @@ const Data = styled.p`
 const ContentContainer = styled.div`
   display: flex;
   width: 100%;
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
 `;
 
 const Content = styled.div`
@@ -187,6 +197,7 @@ export const getStaticProps = async (ctx) => {
         content: serializedMd,
       },
     },
+    revalidate: 180,
   };
 };
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {

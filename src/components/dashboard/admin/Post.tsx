@@ -8,6 +8,7 @@ import {
   UpdatePost,
   UploadImages,
 } from '../../../services/projectsApi';
+import { address } from '../../../utils/values';
 
 interface IEditorContainer {
   hovering: boolean;
@@ -161,7 +162,7 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
                   formData.append('imgArray', file, name);
                   UploadImages(formData).then((res) => {
                     let contentCopy = Data.content;
-                    contentCopy += `\n<Images>\n![alt text](http://localhost:3000${res.data.data[0]})\n</Images>`;
+                    contentCopy += `\n<Images>\n![alt text](${address}${res.data.data[0]})\n</Images>`;
                     setData({
                       ...Data,
                       content: contentCopy,
@@ -193,7 +194,7 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
             return (
               <div style={{ border: 'solid 5px black' }} key={j}>
                 <img
-                  src={`http://localhost:3000/posts/uploads/${_id}/${i}`}
+                  src={`${address}/posts/uploads/${_id}/${i}`}
                   height={'120px'}
                 />
               </div>
@@ -202,7 +203,7 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
             return (
               <img
                 key={j}
-                src={`http://localhost:3000/posts/uploads/${_id}/${i}`}
+                src={`${address}/posts/uploads/${_id}/${i}`}
                 height={'120px'}
                 onClick={() => {
                   setData({ ...Data, banner: i });

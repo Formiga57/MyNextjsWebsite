@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { IAdminPostInfos } from '../utils/projectsApi';
+import { address } from '../utils/values';
 
 export interface IProject {
   slug: string;
@@ -13,7 +14,7 @@ export interface IProject {
 }
 
 const instance = axios.create({
-  baseURL: 'https://formiga57.xyz/api/projects',
+  baseURL: `${address}/api/projects`,
   timeout: 15000,
 });
 
@@ -37,7 +38,7 @@ export const GetPostInfo = async (
 export const UploadImages = async (
   formData: FormData
 ): Promise<AxiosResponse<any, any>> => {
-  return await axios.post('https://formiga57.xyz/api/uploadfile', formData);
+  return await axios.post(`${address}/api/uploadfile`, formData);
 };
 export const UpdatePost = async (
   Data: IAdminPostInfos,

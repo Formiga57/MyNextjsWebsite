@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { address } from '../utils/values';
 
 export interface IProject {
   slug: string;
@@ -12,7 +13,7 @@ export interface IProject {
 }
 
 const instance = axios.create({
-  baseURL: 'https://site.formiga57.xyz/api/contact',
+  baseURL: `${address}/api/contact`,
   timeout: 15000,
 });
 
