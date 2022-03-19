@@ -141,36 +141,27 @@ const Project = ({ post }) => {
     AddPopularity(post.id);
     renderMathInElement(document.body);
   }, []);
-  if (!router.isFallback && !post?.slug) {
-    return <ErrorPage statusCode={404} />;
-  }
   const d = new Date(post.date);
   return (
     <Background>
       <BackgroundFilter>
         <PostContainer>
-          {router.isFallback ? (
-            <div>Carregando...</div>
-          ) : (
-            <>
-              <TopContainer>
-                <Banner id={post.id} />
-                <TitleTopContainer>
-                  <GeneralTitle>{post.title}</GeneralTitle>
-                  <Description>{post.description}</Description>
-                  <Data>
-                    {d.getDate()} de {Meses[d.getMonth()]}, {d.getFullYear()}
-                  </Data>
-                </TitleTopContainer>
-              </TopContainer>
-              <ContentContainer>
-                <Content>
-                  <MDXRemote {...post.content} components={components} />
-                </Content>
-                <ContentSide />
-              </ContentContainer>
-            </>
-          )}
+          <TopContainer>
+            <Banner id={post.id} />
+            <TitleTopContainer>
+              <GeneralTitle>{post.title}</GeneralTitle>
+              <Description>{post.description}</Description>
+              <Data>
+                {d.getDate()} de {Meses[d.getMonth()]}, {d.getFullYear()}
+              </Data>
+            </TitleTopContainer>
+          </TopContainer>
+          <ContentContainer>
+            <Content>
+              <MDXRemote {...post.content} components={components} />
+            </Content>
+            <ContentSide />
+          </ContentContainer>
         </PostContainer>
       </BackgroundFilter>
     </Background>
