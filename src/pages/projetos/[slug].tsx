@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import ErrorPage from 'next/error';
 import styled from 'styled-components';
 import { GetAllSlugs, GetPostBySlug } from '../../utils/projectsApi';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
+import fs from 'fs';
 
 import 'katex/dist/katex.min.css';
 import { AddPopularity } from '../../services/projectsApi';
@@ -134,33 +136,41 @@ const Image = styled.div<IImage>`
 `;
 const components = { Images, Image };
 const Project = ({ post }) => {
+  const router = useRouter();
   useEffect(() => {
     AddPopularity(post.id);
     renderMathInElement(document.body);
   }, []);
-  const router = useRouter();
-  const { slug } = router.query;
+  if (!router.isFallback && !post?.slug) {
+    return <ErrorPage statusCode={404} />;
+  }
   const d = new Date(post.date);
   return (
     <Background>
       <BackgroundFilter>
         <PostContainer>
-          <TopContainer>
-            <Banner id={post.id} />
-            <TitleTopContainer>
-              <GeneralTitle>{post.title}</GeneralTitle>
-              <Description>{post.description}</Description>
-              <Data>
-                {d.getDate()} de {Meses[d.getMonth()]}, {d.getFullYear()}
-              </Data>
-            </TitleTopContainer>
-          </TopContainer>
-          <ContentContainer>
-            <Content>
-              <MDXRemote {...post.content} components={components} />
-            </Content>
-            <ContentSide />
-          </ContentContainer>
+          {router.isFallback ? (
+            <div>Carregando...</div>
+          ) : (
+            <>
+              <TopContainer>
+                <Banner id={post.id} />
+                <TitleTopContainer>
+                  <GeneralTitle>{post.title}</GeneralTitle>
+                  <Description>{post.description}</Description>
+                  <Data>
+                    {d.getDate()} de {Meses[d.getMonth()]}, {d.getFullYear()}
+                  </Data>
+                </TitleTopContainer>
+              </TopContainer>
+              <ContentContainer>
+                <Content>
+                  <MDXRemote {...post.content} components={components} />
+                </Content>
+                <ContentSide />
+              </ContentContainer>
+            </>
+          )}
         </PostContainer>
       </BackgroundFilter>
     </Background>
@@ -171,8 +181,9 @@ export default Project;
 export const getStaticProps = async (ctx) => {
   const slug = ctx.params;
   const post = await GetPostBySlug(slug['slug']);
-  const { data } = await axios(
-    `https://formiga57.xyz/posts/uploads/${post.id}/content.md`
+  const data = await fs.readFileSync(
+    `./public/posts/uploads/${post.id}/content.md`,
+    'utf8'
   );
   const serializedMd = await serialize(data);
   return {
@@ -195,6 +206,6 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
         params: { slug: p },
       };
     }), //indicates that no page needs be created at build time
-    fallback: 'blocking', //indicates the type of fallback
+    fallback: false, //indicates the type of fallback
   };
 };
