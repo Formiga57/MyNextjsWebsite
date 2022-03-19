@@ -32,7 +32,7 @@ const handler = async ({ method, body }: NextApiRequest,res: NextApiResponse) =>
   if(!matched){
     return res.status(401).json({error:"Usuário ou senha incorretos!"});
   }
-  const token = await sign({email:user.email,username:user.username,id:user._id.toString()},'day32tdbnhe789a2nebtasbdkj',{
+  const token = await sign({email:user.email,username:user.username,id:user._id.toString()},process.env.JWT_TOKEN,{
       subject:user._id.toString(),
       expiresIn:"50s"
   })

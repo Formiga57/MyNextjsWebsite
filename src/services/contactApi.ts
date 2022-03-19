@@ -17,5 +17,5 @@ const instance = axios.create({
 });
 
 export const SendMessage = (data) => {
-  instance.post(data)
+  instance.post(data);
 };

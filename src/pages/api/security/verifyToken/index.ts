@@ -34,7 +34,7 @@ const handler = async ({ method, body,headers }: NextApiRequest,res: NextApiResp
     if(cookies['refreshToken'] !== refresh.refresh){
         return res.status(401).json({error:"Refresh Incorrect, this should happen?"})
     }
-    const token = await sign({email:user.email,username:user.username,id:user._id.toString()},'day32tdbnhe789a2nebtasbdkj',{
+    const token = await sign({email:user.email,username:user.username,id:user._id.toString()},process.env.JWT_TOKEN,{
         subject:user._id.toString(),
         expiresIn:"50s"
     })
