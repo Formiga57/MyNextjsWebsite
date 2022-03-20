@@ -4,7 +4,6 @@ import 'katex/dist/katex.min.css';
 import { GetStaticPaths } from 'next';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import Footer from '../../components/Footer';
@@ -16,6 +15,8 @@ import hljs from 'highlight.js';
 import lua from 'highlight.js/lib/languages/lua';
 hljs.registerLanguage('lua', lua);
 import 'highlight.js/styles/tokyo-night-dark.css';
+import Head from 'next/head';
+import ColorThief from 'colorthief';
 
 const Meses = [
   'Janeiro',
@@ -166,6 +167,23 @@ const Project = ({ post }) => {
   const d = new Date(post.date);
   return (
     <>
+      <Head>
+        <title>{post.title}</title>
+        <meta property='og:title' content={post.title} />
+        <meta property='title' content={post.title} />
+        <meta
+          property='og:image'
+          content={`${address}/posts/uploads/${post.id}/banner.jpg`}
+        />
+        <meta
+          property='image'
+          content={`${address}/posts/uploads/${post.id}/banner.jpg`}
+        />
+        <meta property='og:description' content={post.description} />
+        <meta property='description' content={post.description} />
+        <meta name='twitter:card' content='summary_large_image'></meta>
+        <meta name='theme-color' content='#ffffff'></meta>
+      </Head>
       <Header />
       <Background>
         <br />

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import TitleChanger from '../components/TitleChanger';
 import { SendMessage } from '../services/contactApi';
 const Background = styled.div`
   position: absolute;
@@ -97,7 +98,7 @@ const Contato = () => {
     window.location.replace('/');
   };
   return (
-    <>
+    <TitleChanger>
       <Header />
       <Background>
         <br />
@@ -142,7 +143,7 @@ const Contato = () => {
         <br />
         <Footer />
       </Background>
-    </>
+    </TitleChanger>
   );
 };
 export default Contato;

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ProjectCard from '../components/ProjectCard';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import TitleChanger from '../components/TitleChanger';
 
 const Body = styled.div`
   position: absolute;
@@ -37,7 +38,7 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <>
+    <TitleChanger>
       <Header />
       <Body>
         <br />
@@ -60,7 +61,7 @@ const Portfolio = () => {
         </ProjectCardContainer>
         <Footer />
       </Body>
-    </>
+    </TitleChanger>
   );
 };
 

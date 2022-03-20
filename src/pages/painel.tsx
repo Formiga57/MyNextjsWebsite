@@ -8,6 +8,7 @@ import PostList from '../components/dashboard/admin/PostList';
 import { VerifyRefresh } from '../services/securityApi';
 import Keys from '../components/dashboard/admin/TmpDiscordBots/Keys';
 import KeysStats from '../components/dashboard/admin/TmpDiscordBots/KeyStats';
+import TitleChanger from '../components/TitleChanger';
 
 enum Pages {
   Hello,
@@ -39,23 +40,25 @@ const Dashboard = ({ authenticated }) => {
       });
   }, [setUser]);
   return (
-    <FlexContainer>
-      <SideBar roles={user?.roles}></SideBar>
-      <ContentContainer>
-        {(() => {
-          switch (Page) {
-            case Pages.Hello:
-              return <div>Helouu!!</div>;
-            case Pages.Posts:
-              return <PostList />;
-            case Pages.TmpDiscord:
-              return <Keys chave={user.key} />;
-            case Pages.TmpDiscord2:
-              return <KeysStats chave={user.key} />;
-          }
-        })()}
-      </ContentContainer>
-    </FlexContainer>
+    <TitleChanger>
+      <FlexContainer>
+        <SideBar roles={user?.roles}></SideBar>
+        <ContentContainer>
+          {(() => {
+            switch (Page) {
+              case Pages.Hello:
+                return <div>Helouu!!</div>;
+              case Pages.Posts:
+                return <PostList />;
+              case Pages.TmpDiscord:
+                return <Keys chave={user.key} />;
+              case Pages.TmpDiscord2:
+                return <KeysStats chave={user.key} />;
+            }
+          })()}
+        </ContentContainer>
+      </FlexContainer>
+    </TitleChanger>
   );
 };
 

@@ -225,8 +225,7 @@ const Home: React.FC = () => {
               <p>
                 Estudo Engenharia Aeronáutica na EESC - USP, possuo
                 conhecimentos em Mecânica, Eletrônica e Elétrica. Tenho
-                experiência em Programação, trabalhando há 2 anos como
-                Freelancer.
+                experiência em Programação trabalhando como Freelancer.
               </p>
             </NameDiv>
             <CardsDiv>
@@ -266,11 +265,13 @@ const Home: React.FC = () => {
                 title='The Schools Challenge'
                 description={
                   <>
-                    Sendo uma iniciativa do banco JP. Morgan juntamente ao
-                    Centro Paula Souza, aprendi o processo de criação de{' '}
-                    <i>Startups</i>. Obtive soft skills ao apresentar um Pitch
-                    de nosso projeto para investidores, sendo um dos grupos
-                    finalistas e alcançando o terceiro lugar.
+                    Oferecido por uma iniciativa do banco JP. Morgan juntamente
+                    ao Centro Paula Souza, com meu grupo formado, aprendi o
+                    processo de criação de <i>Startups</i>. Obtive{' '}
+                    <i>soft skills</i>
+                    ao apresentar um <i>Pitch</i> de nosso projeto para
+                    investidores, sendo um dos grupos finalistas e alcançando o
+                    terceiro lugar.
                   </>
                 }
               ></SubTrajectory>
@@ -288,12 +289,14 @@ const Home: React.FC = () => {
                 description={
                   <>
                     Realizei este curso para me orientar melhor de tecnologias
-                    Cloud, e como estas podem ser utilizadas para rápido
-                    provisionamento de servidores e serviçõs de I.A. Ao mesmo
-                    tempo, reparei um servidor HPE. Assim, utilizo atualmente
-                    para hospedar este site, para meus projetos e NAS. Com isto
-                    obtive experiência de serviços open source, SysAdmin em
-                    linux e toda conectividade e infraestrutura de rede.
+                    <i>Cloud</i>, e como estas podem ser utilizadas para rápido
+                    provisionamento de servidores e serviços de I.A. Ao mesmo
+                    tempo, reparei um servidor HPE que utilizo atualmente para
+                    hospedar este site, para meus projetos e NAS. Com isto
+                    obtive experiência de serviços open source, <i>SysAdmin</i>{' '}
+                    em
+                    <i>Linux</i>, conectividade e infraestrutura de rede{' '}
+                    <i>On-premises</i> e<i>Cloud</i>.
                   </>
                 }
               ></SubTrajectory>
@@ -303,11 +306,16 @@ const Home: React.FC = () => {
                 title='Adelphi Unesp - Torneio de Ingresso'
                 description={
                   <>
-                    Meu primeiro contato com o <i>Software</i> Xflr5, e dei
-                    início ao meu{' '}
+                    Meu primeiro contato com o <i>Software</i> Xflr5 e com
+                    assuntos relacionados ao projeto de uma arenave para a
+                    competição SAE na categoria <i>Advanced</i>. Tive interesse
+                    de estudar os transceptores utilizados nas areonaves
+                    rádio-controladas. Este intresse me incentivou para o começo
+                    do meu
                     <Link href='/projetos/estudo-de-circuitos-osciladores-e-r%C3%A1dios'>
                       Estudo de Radiofrequência
                     </Link>
+                    .
                   </>
                 }
               ></SubTrajectory>
@@ -348,7 +356,7 @@ const Home: React.FC = () => {
             ]}
           />
           <AbilitiesCard
-            title='Simuladores & PCB'
+            title='Simuladores & Eletrônica'
             elements={[
               {
                 title: 'Proteus, LTSpice, Falstad',
@@ -377,7 +385,7 @@ const Home: React.FC = () => {
               {
                 title: 'MatLab',
                 description:
-                  'Utilizo no dia a dia e na faculdade, juntamente ao Matplotlib para melhor assimilação de temas matemáticos.',
+                  'Utilizado em meus projetos e na faculdade, juntamente ao Matplotlib para melhor assimilação de temas matemáticos e análises gráficas.',
               },
               {
                 title: 'C#',
@@ -393,6 +401,11 @@ const Home: React.FC = () => {
                 title: 'Java',
                 description:
                   'Utilizo no Android Studio para projetos envolvendo sensores de celulares.',
+              },
+              {
+                title: 'LaTeX',
+                description:
+                  'Tenho experiência na escrita de trabalhos acadêmicos há 4 anos.',
               },
             ]}
           />

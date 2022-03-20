@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import TitleChanger from '../components/TitleChanger';
 import { HandleLogin } from '../services/securityApi';
 
 interface IInput {
@@ -104,42 +105,44 @@ const Login = () => {
       });
   };
   return (
-    <Background>
-      <BackgroundFilter>
-        <TitleDiv>Log-in</TitleDiv>
-        <Container>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              placeholder='Usuário / Email'
-              type='text'
-              {...register('identifier', { required: true })}
-              error={errors.identifier?.type === 'required' || errored}
-            />
-            <br />
-            <Input
-              placeholder='Senha'
-              type='password'
-              {...register('password', { required: true })}
-              error={errors.password?.type === 'required' || errored}
-            />
-            <br />
-            <div style={{ textAlign: 'center' }}>
-              Manter Logado
+    <TitleChanger>
+      <Background>
+        <BackgroundFilter>
+          <TitleDiv>Log-in</TitleDiv>
+          <Container>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Input
-                style={{ height: '20px' }}
-                type='checkbox'
-                placeholder='Manter logado'
-                {...register('persist')}
+                placeholder='Usuário / Email'
+                type='text'
+                {...register('identifier', { required: true })}
+                error={errors.identifier?.type === 'required' || errored}
               />
-            </div>
-            <br />
-            <Button type='submit' disabled={clicked}>
-              Enviar
-            </Button>
-          </form>
-        </Container>
-      </BackgroundFilter>
-    </Background>
+              <br />
+              <Input
+                placeholder='Senha'
+                type='password'
+                {...register('password', { required: true })}
+                error={errors.password?.type === 'required' || errored}
+              />
+              <br />
+              <div style={{ textAlign: 'center' }}>
+                Manter Logado
+                <Input
+                  style={{ height: '20px' }}
+                  type='checkbox'
+                  placeholder='Manter logado'
+                  {...register('persist')}
+                />
+              </div>
+              <br />
+              <Button type='submit' disabled={clicked}>
+                Enviar
+              </Button>
+            </form>
+          </Container>
+        </BackgroundFilter>
+      </Background>
+    </TitleChanger>
   );
 };
 

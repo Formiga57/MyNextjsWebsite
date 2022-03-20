@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { HandleRegister } from '../services/securityApi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import TitleChanger from '../components/TitleChanger';
 
 interface IInput {
   error?: boolean;
@@ -120,58 +121,60 @@ const Registro = () => {
       });
   };
   return (
-    <Background>
-      <BackgroundFilter>
-        <TitleDiv>Registro</TitleDiv>
-        <Container>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              autoComplete='off'
-              placeholder='Usuário'
-              type='text'
-              {...register('user')}
-              error={errors.user}
-            />
-            <br />
-            <Input
-              autoComplete='off'
-              placeholder='Email'
-              {...register('email')}
-              error={errors.email}
-            />
-            <br />
-            <Input
-              placeholder='Senha'
-              type='password'
-              {...register('password')}
-              error={errors.password}
-            />
-            {errors.password?.message}
-            <br />
-            <Input
-              placeholder='Senha'
-              type='password'
-              {...register('passwordConfirm')}
-              error={errors.passwordConfirm}
-            />
-            {errors.passwordConfirm?.message}
-            <br />
-            <Input
-              autoComplete='off'
-              placeholder='Token'
-              type='text'
-              required
-              {...register('token')}
-              error={errors.token || tokenError}
-            />
-            <br />
-            <Button type='submit' disabled={clicked}>
-              Enviar
-            </Button>
-          </form>
-        </Container>
-      </BackgroundFilter>
-    </Background>
+    <TitleChanger>
+      <Background>
+        <BackgroundFilter>
+          <TitleDiv>Registro</TitleDiv>
+          <Container>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Input
+                autoComplete='off'
+                placeholder='Usuário'
+                type='text'
+                {...register('user')}
+                error={errors.user}
+              />
+              <br />
+              <Input
+                autoComplete='off'
+                placeholder='Email'
+                {...register('email')}
+                error={errors.email}
+              />
+              <br />
+              <Input
+                placeholder='Senha'
+                type='password'
+                {...register('password')}
+                error={errors.password}
+              />
+              {errors.password?.message}
+              <br />
+              <Input
+                placeholder='Senha'
+                type='password'
+                {...register('passwordConfirm')}
+                error={errors.passwordConfirm}
+              />
+              {errors.passwordConfirm?.message}
+              <br />
+              <Input
+                autoComplete='off'
+                placeholder='Token'
+                type='text'
+                required
+                {...register('token')}
+                error={errors.token || tokenError}
+              />
+              <br />
+              <Button type='submit' disabled={clicked}>
+                Enviar
+              </Button>
+            </form>
+          </Container>
+        </BackgroundFilter>
+      </Background>
+    </TitleChanger>
   );
 };
 
