@@ -19,6 +19,7 @@
     "better-react-mathjax": "^1.0.3",
     "chart.js": "^3.7.1",
     "dotenv": "^16.0.0",
+    "highlight.js": "^11.5.0",
     "jsonwebtoken": "^8.5.1",
     "katex": "^0.15.3",
     "mathjax": "^3.2.0",
@@ -32,6 +33,7 @@
     "react-dom": "17.0.2",
     "react-hook-form": "^7.27.1",
     "react-icons": "^4.3.1",
+    "react-syntax-highlighter": "^15.5.0",
     "styled-components": "^5.3.3",
     "yup": "^0.32.11"
   },

@@ -12,6 +12,10 @@ import Header from '../../components/Header';
 import { AddPopularity } from '../../services/projectsApi';
 import { GetAllSlugs, GetPostBySlug } from '../../utils/projectsApi';
 import { address } from '../../utils/values';
+import hljs from 'highlight.js';
+import lua from 'highlight.js/lib/languages/lua';
+hljs.registerLanguage('lua', lua);
+import 'highlight.js/styles/tokyo-night-dark.css';
 
 const Meses = [
   'Janeiro',
@@ -118,6 +122,14 @@ const Content = styled.div`
   position: relative;
   flex-basis: 65%;
   border-right: solid 0.5px black;
+  pre {
+    width: 90%;
+    margin: 20px auto;
+    margin-left: 20px;
+    code {
+      border-radius: 5px;
+    }
+  }
 `;
 const ContentSide = styled.div`
   flex-basis: 35%;
@@ -146,8 +158,8 @@ const Image = styled.div<IImage>`
 `;
 const components = { Images, Image };
 const Project = ({ post }) => {
-  const router = useRouter();
   useEffect(() => {
+    hljs.highlightAll();
     AddPopularity(post.id);
     renderMathInElement(document.body);
   }, []);
