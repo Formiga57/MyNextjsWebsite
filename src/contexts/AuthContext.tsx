@@ -1,6 +1,4 @@
-import { GetServerSideProps } from 'next';
-import { createContext, useEffect, useState } from 'react';
-import { VerifyRefresh } from '../services/securityApi';
+import { createContext, useState } from 'react';
 
 interface IContextValues {
   user?: IUser;
@@ -14,6 +12,7 @@ interface IUser {
   email: string;
   username: string;
   roles: number[];
+  key: string;
 }
 export const AuthContext = createContext({} as IContextValues);
 

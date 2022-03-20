@@ -122,22 +122,22 @@ const Post: React.FC<IProps> = ({ _id, end }) => {
       <Input
         type='text'
         placeholder='Title'
-        value={Data?.title || ' '}
+        value={Data?.title || ''}
         onChange={(e) => setData({ ...Data, title: e.target.value })}
       />
       <Input
         type='text'
         placeholder='Slug'
-        value={Data?.slug || ' '}
-        onChange={(e) => setData({ ...Data, slug: e.target.title })}
+        value={Data?.slug || ''}
+        onChange={(e) => setData({ ...Data, slug: e.target.value })}
       />
       <DescContainer
         placeholder='Desc'
-        value={Data?.description || ' '}
+        value={Data?.description || ''}
         onChange={(e) => setData({ ...Data, description: e.target.value })}
       />
       <EditorContainer
-        value={Data?.content || ' '}
+        value={Data?.content || ''}
         onChange={(e) => {
           setData({ ...Data, content: e.target.value });
         }}

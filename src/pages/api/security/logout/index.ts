@@ -1,9 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import User, { IUser } from '../../../../models/userModel';
-import dbConnect from '../../../../utils/mongodb';
-import { hash } from 'bcryptjs';
-import { decode, sign } from 'jsonwebtoken';
-import Refresh, { IRefresh } from '../../../../models/refreshModel';
 const parseCookie = (str: string): object =>
   str
     .split(';')

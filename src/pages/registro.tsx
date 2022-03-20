@@ -1,18 +1,43 @@
-import React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { HandleLogin, HandleRegister } from '../services/securityApi';
-const Input = styled.input`
+import { HandleRegister } from '../services/securityApi';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+
+interface IInput {
+  error?: boolean;
+}
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email().required(),
+  user: Yup.string().required().min(4),
+  password: Yup.string()
+    .required()
+    .min(8, 'A senha deve ter pelo menos 8 caracteres')
+    .matches(/^(?=.*[a-z])(?=.*\d)/, 'A senha deve ser mais forte'),
+  passwordConfirm: Yup.string()
+    .required()
+    .oneOf([Yup.ref('password')], 'As senhas não são iguais'),
+  token: Yup.string().required(),
+});
+const formOptions = { resolver: yupResolver(validationSchema) };
+const Input = styled.input<IInput>`
   border: inherit;
   border-radius: inherit;
   outline: inherit;
   background: transparent;
-  border-bottom: 2px solid black;
   box-sizing: border-box;
   padding: 5px;
   width: 90%;
   font-size: 15pt;
   margin: auto;
+  ${(p) => {
+    if (p.error) {
+      return 'border-bottom: 2px solid red;';
+    } else {
+      return 'border-bottom: 2px solid black;';
+    }
+  }}
 `;
 const Background = styled.div`
   width: 100vw;
@@ -76,11 +101,23 @@ const Button = styled.button`
   }
 `;
 const Registro = () => {
-  const { register, handleSubmit } = useForm();
+  const [clicked, setClicked] = useState(false);
+  const [tokenError, setTokenError] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm(formOptions);
   const onSubmit = (data) => {
+    setClicked(true);
     HandleRegister(data)
       .then((res) => window.location.replace('/login'))
-      .catch((err) => {});
+      .catch((err) => {
+        setClicked(false);
+        if (err === 'Token não existe') {
+          setTokenError(true);
+        }
+      });
   };
   return (
     <Background>
@@ -89,34 +126,48 @@ const Registro = () => {
         <Container>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
-              placeholder='Usuário / Email'
+              autoComplete='off'
+              placeholder='Usuário'
               type='text'
-              required
-              {...register('user', { required: true })}
+              {...register('user')}
+              error={errors.user}
             />
             <br />
             <Input
+              autoComplete='off'
               placeholder='Email'
-              type='text'
-              required
-              {...register('email', { required: true })}
+              {...register('email')}
+              error={errors.email}
             />
             <br />
             <Input
               placeholder='Senha'
               type='password'
-              required
-              {...register('password', { required: true })}
+              {...register('password')}
+              error={errors.password}
             />
+            {errors.password?.message}
             <br />
             <Input
+              placeholder='Senha'
+              type='password'
+              {...register('passwordConfirm')}
+              error={errors.passwordConfirm}
+            />
+            {errors.passwordConfirm?.message}
+            <br />
+            <Input
+              autoComplete='off'
               placeholder='Token'
               type='text'
               required
-              {...register('token', { required: true })}
+              {...register('token')}
+              error={errors.token || tokenError}
             />
             <br />
-            <Button type='submit'>Enviar</Button>
+            <Button type='submit' disabled={clicked}>
+              Enviar
+            </Button>
           </form>
         </Container>
       </BackgroundFilter>

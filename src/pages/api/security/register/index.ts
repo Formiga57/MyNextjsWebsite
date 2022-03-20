@@ -19,25 +19,26 @@ const handler = async ({ method, body }: NextApiRequest,res: NextApiResponse) =>
   const payload = body as IBody;
   const existentUser:IUser = await User.findOne({$or:[{username:payload.user},{email:payload.email}]})
   if(existentUser){
-    return res.status(400).json({error:"Usuário já existente"});
+    return res.status(200).json({error:"Usuário já existente"});
   }
   const existentToken:IToken = await Token.findOne({token:payload.token})
   if(!existentToken){
-    return res.status(400).json({error:"Token não existe"});
+    return res.status(200).json({error:"Token não existe"});
   }
   if(existentToken.userId){
-    return res.status(400).json({error:"Token já utilizado"});
+    return res.status(200).json({error:"Token já utilizado"});
   }
-  existentToken.userId = existentUser._id.toString()
-  existentToken.save()
   const passHash = await hash(payload.password,10)
   const newUser:IUser = {
     email: payload.email,
     username: payload.user,
     password: passHash,
-    roles: []
+    roles: existentToken.predefRoles,
+    key:existentToken.token
   }
-  User.create(newUser)
+  const createdUser = await User.create(newUser)
+  existentToken.userId = createdUser._id.toString()
+  existentToken.save()
   res.status(200).json({ username: newUser.username});
 };
 export default handler;

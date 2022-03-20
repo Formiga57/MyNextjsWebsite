@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { HandleLogin } from '../services/securityApi';
-const Input = styled.input`
+
+interface IInput {
+  error?: boolean;
+}
+
+const Input = styled.input<IInput>`
   border: inherit;
   border-radius: inherit;
   outline: inherit;
   background: transparent;
-  border-bottom: 2px solid black;
+  ${(p) => {
+    if (p.error) {
+      return 'border-bottom: 2px solid red;';
+    } else {
+      return 'border-bottom: 2px solid black;';
+    }
+  }}
   box-sizing: border-box;
   padding: 5px;
   width: 90%;
@@ -76,11 +87,21 @@ const Button = styled.button`
   }
 `;
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  const [clicked, setClicked] = useState(false);
+  const [errored, setErrored] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const onSubmit = (data) => {
+    setClicked(true);
     HandleLogin(data)
       .then((res) => window.location.replace('/painel'))
-      .catch((err) => {});
+      .catch((err) => {
+        setErrored(true);
+        setClicked(false);
+      });
   };
   return (
     <Background>
@@ -91,15 +112,15 @@ const Login = () => {
             <Input
               placeholder='Usuário / Email'
               type='text'
-              required
               {...register('identifier', { required: true })}
+              error={errors.identifier?.type === 'required' || errored}
             />
             <br />
             <Input
               placeholder='Senha'
               type='password'
-              required
               {...register('password', { required: true })}
+              error={errors.password?.type === 'required' || errored}
             />
             <br />
             <div style={{ textAlign: 'center' }}>
@@ -112,7 +133,9 @@ const Login = () => {
               />
             </div>
             <br />
-            <Button type='submit'>Enviar</Button>
+            <Button type='submit' disabled={clicked}>
+              Enviar
+            </Button>
           </form>
         </Container>
       </BackgroundFilter>

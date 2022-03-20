@@ -7,7 +7,7 @@ const Container = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  min-height: 160px;
+  height: 160px;
   z-index: 910;
   border-top: solid 0.2px #6868686a;
   background-color: #efeef0;
@@ -21,6 +21,9 @@ const Infos = styled.div`
   p {
     margin-left: 20px;
   }
+  @media (max-width: 700px) {
+    font-size: 0.8rem;
+  }
 `;
 const Contacts = styled.div`
   margin-right: 30px;
@@ -29,6 +32,10 @@ const Contacts = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 26pt;
+  @media (max-width: 700px) {
+    font-size: 17pt;
+    margin-right: 5px;
+  }
   svg {
     transition: ease 0.2s;
     cursor: pointer;
@@ -42,6 +49,14 @@ const Contacts = styled.div`
 const Link = styled.a`
   text-decoration: none;
   color: black;
+`;
+const LinkMail = styled.a`
+  text-decoration: none;
+  color: black;
+  font-size: 32pt;
+  @media (max-width: 700px) {
+    font-size: 20pt;
+  }
 `;
 
 const Footer = () => {
@@ -65,12 +80,9 @@ const Footer = () => {
         >
           <BsDiscord />
         </Link>
-        <Link
-          href='mailto:viniciusformigone.s@gmail.com'
-          style={{ fontSize: '32pt' }}
-        >
+        <LinkMail href='mailto:viniciusformigone.s@gmail.com'>
           <MdEmail />
-        </Link>
+        </LinkMail>
       </Contacts>
     </Container>
   );

@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import ErrorPage from 'next/error';
-import styled from 'styled-components';
-import { GetAllSlugs, GetPostBySlug } from '../../utils/projectsApi';
-import { serialize } from 'next-mdx-remote/serialize';
-import { MDXRemote } from 'next-mdx-remote';
-import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
 import fs from 'fs';
-
+import renderMathInElement from 'katex/dist/contrib/auto-render.mjs';
 import 'katex/dist/katex.min.css';
-import { AddPopularity } from '../../services/projectsApi';
 import { GetStaticPaths } from 'next';
-import axios from 'axios';
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import styled from 'styled-components';
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
+import { AddPopularity } from '../../services/projectsApi';
+import { GetAllSlugs, GetPostBySlug } from '../../utils/projectsApi';
 import { address } from '../../utils/values';
+
 const Meses = [
   'Janeiro',
   'Fevereiro',
@@ -36,8 +36,9 @@ interface IBanner {
 }
 
 const Background = styled.div`
-  width: 100vw;
-  min-height: 100vh;
+  position: absolute;
+  min-height: 100%;
+  width: 100%;
   background-image: url('/images/mathBackground.png');
   background-color: #424242;
   z-index: 1;
@@ -45,7 +46,6 @@ const Background = styled.div`
   background-size: 1000px;
 `;
 const BackgroundFilter = styled.div`
-  width: 100vw;
   min-height: 100vh;
   background-color: #3a3a3ad1;
   z-index: 2;
@@ -153,28 +153,42 @@ const Project = ({ post }) => {
   }, []);
   const d = new Date(post.date);
   return (
-    <Background>
-      <BackgroundFilter>
-        <PostContainer>
-          <TopContainer>
-            <Banner id={post.id} />
-            <TitleTopContainer>
-              <GeneralTitle>{post.title}</GeneralTitle>
-              <Description>{post.description}</Description>
-              <Data>
-                {d.getDate()} de {Meses[d.getMonth()]}, {d.getFullYear()}
-              </Data>
-            </TitleTopContainer>
-          </TopContainer>
-          <ContentContainer>
-            <Content>
-              <MDXRemote {...post.content} components={components} />
-            </Content>
-            <ContentSide />
-          </ContentContainer>
-        </PostContainer>
-      </BackgroundFilter>
-    </Background>
+    <>
+      <Header />
+      <Background>
+        <br />
+        <br />
+        <BackgroundFilter>
+          <Header />
+          <PostContainer>
+            <TopContainer>
+              <Banner id={post.id} />
+              <TitleTopContainer>
+                <GeneralTitle>{post.title}</GeneralTitle>
+                <Description>{post.description}</Description>
+                <Data>
+                  {d.getDate()} de {Meses[d.getMonth()]}, {d.getFullYear()}
+                </Data>
+              </TitleTopContainer>
+            </TopContainer>
+            <ContentContainer>
+              <Content>
+                <MDXRemote {...post.content} components={components} />
+              </Content>
+              <ContentSide />
+            </ContentContainer>
+          </PostContainer>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <Footer />
+        </BackgroundFilter>
+      </Background>
+    </>
   );
 };
 
@@ -207,7 +221,7 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
       return {
         params: { slug: p },
       };
-    }), //indicates that no page needs be created at build time
-    fallback: false, //indicates the type of fallback
+    }),
+    fallback: 'blocking',
   };
 };

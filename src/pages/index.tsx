@@ -1,18 +1,15 @@
-import Head from 'next/head';
-import Image from 'next/image';
-import TitleChanger from '../components/TitleChanger';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { BsChevronCompactDown } from 'react-icons/bs';
 import styled from 'styled-components';
+import AbilitiesCard from '../components/cards/AbilitiesCard';
 import IndexCard from '../components/cards/IndexCard';
 import MainTrajectory from '../components/cards/MainTrajectory';
 import SubTrajectory from '../components/cards/SubTrajectory';
-import { useEffect, useState } from 'react';
-import AbilitiesCard from '../components/cards/AbilitiesCard';
-import Link from 'next/link';
-import { GetList, IProject } from '../services/projectsApi';
-import ProjectCard from '../components/ProjectCard';
-import ProjectCardAnimated from '../components/ProjectCardAnimated';
-import { BsChevronCompactDown } from 'react-icons/bs';
 import Footer from '../components/Footer';
+import ProjectCardAnimated from '../components/ProjectCardAnimated';
+import TitleChanger from '../components/TitleChanger';
+import { GetList, IProject } from '../services/projectsApi';
 interface IParticleProps {
   type: number;
 }

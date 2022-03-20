@@ -1,7 +1,7 @@
-import dbConnect from './mongodb';
+import { decode } from 'jsonwebtoken';
 import Refresh, { IRefresh } from '../models/refreshModel';
 import User, { IUser } from '../models/userModel';
-import { decode, sign } from 'jsonwebtoken';
+import dbConnect from './mongodb';
 export const VerifyToken = async (
   refreshCookie: string,
   tokenCookie: string
@@ -15,16 +15,16 @@ export const VerifyToken = async (
       }
     }
     if (!refreshCookie) {
-      rej("Refresh token doesn't exists and token is invalid");
+      return rej("Refresh token doesn't exists and token is invalid");
     }
     const refresh: IRefresh = await Refresh.findOne({ refresh: refreshCookie });
-    const user: IUser = await User.findOne({ _id: refresh.userid });
     if (!refresh) {
-      rej('No refresh token associated, this should happen?');
+      return rej('No refresh token associated, this should happen?');
     }
+    const user: IUser = await User.findOne({ _id: refresh.userid });
     if (refreshCookie !== refresh.refresh) {
-      rej('Refresh token invalid, this should happen?');
+      return rej('Refresh token invalid, this should happen?');
     }
-    res('');
+    return res('');
   });
 };

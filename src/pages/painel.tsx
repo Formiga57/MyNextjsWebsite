@@ -6,10 +6,14 @@ import { VerifyToken } from '../utils/tokenVerify';
 import SideBar from '../components/SideBar';
 import PostList from '../components/dashboard/admin/PostList';
 import { VerifyRefresh } from '../services/securityApi';
+import Keys from '../components/dashboard/admin/TmpDiscordBots/Keys';
+import KeysStats from '../components/dashboard/admin/TmpDiscordBots/KeyStats';
 
 enum Pages {
   Hello,
   Posts,
+  TmpDiscord,
+  TmpDiscord2,
 }
 
 const FlexContainer = styled.div`
@@ -22,12 +26,6 @@ const ContentContainer = styled.div`
   flex-grow: 1;
   height: 100vh;
   overflow-y: scroll;
-`;
-const SendProjectContainter = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 `;
 const Dashboard = ({ authenticated }) => {
   const { user, Page, setUser } = useContext(AuthContext);
@@ -48,10 +46,12 @@ const Dashboard = ({ authenticated }) => {
           switch (Page) {
             case Pages.Hello:
               return <div>Helouu!!</div>;
-              break;
             case Pages.Posts:
               return <PostList />;
-              break;
+            case Pages.TmpDiscord:
+              return <Keys chave={user.key} />;
+            case Pages.TmpDiscord2:
+              return <KeysStats chave={user.key} />;
           }
         })()}
       </ContentContainer>

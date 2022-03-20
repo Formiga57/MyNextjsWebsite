@@ -20,6 +20,8 @@ const handler = async ({ method, body,headers }: NextApiRequest,res: NextApiResp
         const decoded = decode(cookies['accessToken'])
         const user = await User.findOne({$or:[{username:decoded['username']},{email:decoded['email']}]})
         if(decoded['exp'] > new Date().getTime()/1000){
+            user.password = null
+            delete user.password
             return res.status(200).json(user)
         }
     }
@@ -39,6 +41,8 @@ const handler = async ({ method, body,headers }: NextApiRequest,res: NextApiResp
         expiresIn:"50s"
     })
     res.setHeader('Set-Cookie',`accessToken=${token}; HttpOnly; Max-Age=3600;Path=/;`)
+    user.password = null
+    delete user.password
     return res.status(200).json(user)
 };
 export default handler;

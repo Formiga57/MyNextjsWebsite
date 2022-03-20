@@ -34,7 +34,7 @@ const handler = async ({ method, body }: NextApiRequest,res: NextApiResponse) =>
   }
   const token = await sign({email:user.email,username:user.username,id:user._id.toString()},process.env.JWT_TOKEN,{
       subject:user._id.toString(),
-      expiresIn:"50s"
+      expiresIn:"3600s"
   })
   let cookies = [`accessToken=${token}; HttpOnly; Max-Age=3600;Path=/;`]
   if(payload.persist){
@@ -53,6 +53,6 @@ const handler = async ({ method, body }: NextApiRequest,res: NextApiResponse) =>
     }
   }
   res.setHeader('Set-Cookie',cookies)
-  res.status(200).json({email: user.email,username: user.username,roles: user.roles,id:user._id.toString()});
+  res.status(200).json({email: user.email,username: user.username,roles: user.roles,id:user._id.toString(),key:user.key});
 };
 export default handler;

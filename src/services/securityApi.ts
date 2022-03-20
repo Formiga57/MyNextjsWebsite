@@ -72,7 +72,7 @@ export const HandleRegister = ({
   token,
 }: IRegister): Promise<string> => {
   return new Promise((res, rej) => {
-    const result = instance
+    instance
       .post('/register', {
         user: user,
         email: email,
@@ -80,12 +80,22 @@ export const HandleRegister = ({
         token: token,
       })
       .then((result) => {
-        if (result.status === 200) {
+        if (!result.data.error) {
           res('ok');
         } else {
-          rej();
+          rej(result.data.error);
         }
-      })
-      .catch((err) => rej(err));
+      });
+  });
+};
+export const Logout = () => {
+  return new Promise((res, rej) => {
+    instance.post('/logout').then((result) => {
+      if (result.status === 200) {
+        res('ok');
+      } else {
+        rej();
+      }
+    });
   });
 };

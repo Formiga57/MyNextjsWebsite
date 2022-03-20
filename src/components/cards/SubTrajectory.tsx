@@ -21,7 +21,7 @@ const BoxInfos = styled.div`
     background: #8a8a8a;
     position: absolute;
     top: 0px;
-    height: 130%;
+    height: calc(100% + 30px);
     left: -15px;
     width: 1px;
   }

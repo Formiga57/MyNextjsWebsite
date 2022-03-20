@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai';
 import { AuthContext } from '../contexts/AuthContext';
+import { Logout } from '../services/securityApi';
 interface IProps {
   roles: number[];
 }
@@ -12,6 +13,7 @@ interface IContainer {
   expanded: boolean;
 }
 enum Roles {
+  discord,
   post = 57,
 }
 const Container = styled.div<IContainer>`
@@ -84,8 +86,24 @@ const SideBar: React.FC<IProps> = ({ roles }) => {
               </SidebarElements>
             );
             break;
+          case Roles.discord:
+            return (
+              <>
+                <SidebarElements key={j}>
+                  <p onClick={() => setPage(2)}>Keys 0</p>
+                </SidebarElements>
+                <SidebarElements key={j + 'dadas'}>
+                  <p onClick={() => setPage(3)}>Keys 1</p>
+                </SidebarElements>
+              </>
+            );
         }
       })}
+      <SidebarElements>
+        <p onClick={() => Logout().then((res) => window.location.replace('/'))}>
+          Sair
+        </p>
+      </SidebarElements>
     </Container>
   );
 };
