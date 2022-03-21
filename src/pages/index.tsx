@@ -296,7 +296,7 @@ const Home: React.FC = () => {
                     obtive experiência de serviços open source, <i>SysAdmin</i>{' '}
                     em
                     <i>Linux</i>, conectividade e infraestrutura de rede{' '}
-                    <i>On-premises</i> e<i>Cloud</i>.
+                    <i>On-premises</i> e <i>Cloud</i>.
                   </>
                 }
               ></SubTrajectory>
@@ -311,7 +311,7 @@ const Home: React.FC = () => {
                     competição SAE na categoria <i>Advanced</i>. Tive interesse
                     de estudar os transceptores utilizados nas areonaves
                     rádio-controladas. Este intresse me incentivou para o começo
-                    do meu
+                    do meu{' '}
                     <Link href='/projetos/estudo-de-circuitos-osciladores-e-r%C3%A1dios'>
                       Estudo de Radiofrequência
                     </Link>
